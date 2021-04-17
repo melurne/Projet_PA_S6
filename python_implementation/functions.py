@@ -67,11 +67,14 @@ def show_airports(airline_id) :
     """
     lists all airports where the company <airline_id> operates flights
     airline_id = airline.IATA_code
+    Under the assumption that an airline operating in an airport means a flight from this company flew either from or to said airport
+    i.e the result from this SQL query :
 
     SELECT * FROM airports
     WHERE airports.IATA_code IN (   SELECT flights.org_air FROM flights
-                                    WHERE flights.airline == <airline_id>
-                                    )
+                                    WHERE flights.airline == <airline_id>)
+    OR airports.IATA_code IN (      SELECT flights.dest_air FROM flights
+                                    WHERE flights.airline == <airline_id>)
     """
     out_airports_id = []
     for flight in Flights :
@@ -86,5 +89,9 @@ def show_airports(airline_id) :
         if airport['IATA_code'] in out_airports_id :
             out_airports.append("{0[IATA_code]},{0[name]},{0[city]},{0[state]}".format(airport))
     return out_airports
+
+def show_airlines() :
+    pass
+
 
 print(show_airports('HA'))
