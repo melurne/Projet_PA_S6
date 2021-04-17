@@ -1,5 +1,3 @@
-import classes
-
 def readFlights() :
     with open('../data/flights.csv', 'r') as f:
         lines = f.readlines()
@@ -8,7 +6,7 @@ def readFlights() :
     data = []
     #header = header.split(',')
     for line in raw :
-        month, day, weekday, airline, org_air, dest_air, sched_dep,dep_delay, air_time, dist, sched_arr, arr_delay, diverted, canceled = line.split(',')
+        month, day, weekday, airline, org_air, dest_air, sched_dep,dep_delay, air_time, dist, sched_arr, arr_delay, diverted, canceled = line.rstrip('\n').split(',')
         data.append({   'month': int(month),
                         'day': int(day),
                         'weekday': int(weekday),
@@ -34,7 +32,7 @@ def readAirlines() :
     data = []
 
     for line in raw :
-        IATA_code, airline = line.split(',')
+        IATA_code, airline = line.rstrip('\n').split(',')
         data.append({   'IATA_code' : IATA_code,
                         'name': airline
                     })
@@ -48,7 +46,7 @@ def readAirports() :
     data = []
 
     for line in raw :
-        IATA_code, airport, city, state, country, latitude, longitude = line.split(',')
+        IATA_code, airport, city, state, country, latitude, longitude = line.rstrip('\n').split(',')
         data.append({   'IATA_code': IATA_code,
                         'name': airport,
                         'city': city,
@@ -83,11 +81,11 @@ def show_airports(airline_id) :
                 out_airports_id.append(flight['org_air'])
             if not flight['dest_air'] in out_airports_id :
                 out_airports_id.append(flight['dest_air'])
-    out_airports_id.sort()
     out_airports = []
     for airport in Airports :
         if airport['IATA_code'] in out_airports_id :
             out_airports.append("{0[IATA_code]},{0[name]},{0[city]},{0[state]}".format(airport))
+    out_airports.sort()
     return out_airports
 
 def show_airlines(port_id) :
@@ -100,7 +98,13 @@ def show_airlines(port_id) :
     WHERE airlines.IATA_code IN (   SELECT flights.airline FROM flights
                                     WHERE flights.org_air == <port_id>)
     """
-    pass
-
-
-print(show_airports('HA'))
+    out_airlines_id = []
+    for flight in Flights :
+        if (flight['org_air'] == port_id or flight['dest_air'] == port_id) and not flight['airline'] in out_airlines_id:
+            out_airlines_id.append(flight['airline'])
+    out_airlines = []
+    for airline in Airlines :
+        if airline['IATA_code'] in out_airlines_id :
+            out_airlines.append("{0[IATA_code]},{0[name]}".format(airline))
+    out_airlines.sort()
+    return out_airlines
