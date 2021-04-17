@@ -61,6 +61,12 @@ Flights = readFlights()
 Airlines = readAirlines()
 Airports = readAirports()
 
+def formatDictToStr(dict) :
+    out_str = ""
+    for key in dict.keys() :
+        out_str = out_str + "{0[key]},".format(dict)
+    return out_str.rstrip(',')
+
 def show_airports(airline_id) :
     """
     lists all airports where the company <airline_id> operates flights
@@ -84,7 +90,7 @@ def show_airports(airline_id) :
     out_airports = []
     for airport in Airports :
         if airport['IATA_code'] in out_airports_id :
-            out_airports.append("{0[IATA_code]},{0[name]},{0[city]},{0[state]}".format(airport))
+            out_airports.append(formatDictToStr(airline))
     out_airports.sort()
     return out_airports
 
@@ -105,6 +111,6 @@ def show_airlines(port_id) :
     out_airlines = []
     for airline in Airlines :
         if airline['IATA_code'] in out_airlines_id :
-            out_airlines.append("{0[IATA_code]},{0[name]}".format(airline))
+            out_airlines.append(formatDictToStr(airline))
     out_airlines.sort()
     return out_airlines
