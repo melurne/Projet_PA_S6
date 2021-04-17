@@ -114,3 +114,21 @@ def show_airlines(port_id) :
             out_airlines.append(formatDictToStr(airline))
     out_airlines.sort()
     return out_airlines
+
+def show_flights(   port_id,        #Airport['IATA_code']
+                    date,           #month-day
+                    time = None,    #optional sched_dep
+                    limit=None      #int limit number of flights to display
+                    ) :
+    """
+    lists flights from <port_id> on the date <date> with an optional sched_dep <time> and a <limit> for the max number of flights to display
+    i.e the result of this SQL query :
+
+    SELECT * FROM Flights
+    WHERE Flights.org_air == <port_id>
+    AND Flights.month == <date>[0] AND Flights.day == <date>[1]
+    /*AND Flights.sched_dep == <time>*/
+
+    only displaying the first <limit> results
+    """
+    pass
