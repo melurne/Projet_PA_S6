@@ -90,7 +90,16 @@ def show_airports(airline_id) :
             out_airports.append("{0[IATA_code]},{0[name]},{0[city]},{0[state]}".format(airport))
     return out_airports
 
-def show_airlines() :
+def show_airlines(port_id) :
+    """
+    list all airlines which operate flights from <port_id>
+    port_id = airport.IATA_code
+    i.e the result from this SQL query :
+
+    SELECT * FROM airlines
+    WHERE airlines.IATA_code IN (   SELECT flights.airline FROM flights
+                                    WHERE flights.org_air == <port_id>)
+    """
     pass
 
 
