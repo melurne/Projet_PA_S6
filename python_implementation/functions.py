@@ -64,8 +64,12 @@ Airports = readAirports()
 def formatDictToStr(dict) :
     out_str = ""
     for key in dict.keys() :
-        out_str = out_str + "{0[key]},".format(dict)
+        out_str = out_str + "{},".format(dict[key])
     return out_str.rstrip(',')
+
+def printList(liste) :
+    for stri in liste :
+        print(stri)
 
 def show_airports(airline_id) :
     """
@@ -118,7 +122,7 @@ def show_airlines(port_id) :
 def show_flights(   port_id,        #Airport['IATA_code']
                     date,           #month-day
                     time = None,    #optional sched_dep
-                    limit=None      #int limit number of flights to display
+                    limit = None      #int limit number of flights to display
                     ) :
     """
     lists flights from <port_id> on the date <date> with an optional sched_dep <time> and a <limit> for the max number of flights to display
@@ -131,4 +135,16 @@ def show_flights(   port_id,        #Airport['IATA_code']
 
     only displaying the first <limit> results
     """
-    pass
+    out_flights = []
+    month, day = date.split('-')
+    month, day = int(month), int(day)
+    for flight in Flights :
+        if flight['org_air'] == port_id and flight['month'] == month and flight['day'] == day :
+            if time != None and flight['sched_dep'] != time :
+                continue
+            if limit != None and len(out_flights) >= limit :
+                break
+            out_flights.append(formatDictToStr(flight))
+    return out_flights
+
+printList(show_flights('ATL', '2-26'))
