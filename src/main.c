@@ -1,21 +1,21 @@
-#include<stdio.h>
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #define MAX_LEN 100
 
 typedef struct Airline {
-  char* IATA_code;
-  char* name;
+  char *IATA_code;
+  char *name;
 } Airline;
 
 typedef struct Airport {
-  char* IATA_code;
-  char* name;
+  char *IATA_code;
+  char *name;
 
-  char* city;
-  char* state;
-  char* country;
+  char *city;
+  char *state;
+  char *country;
 
   float latitude;
   float longitude;
@@ -26,9 +26,9 @@ typedef struct Flight {
   int day;
   int weekday;
 
-  Airline airline;
-  Airport org_air;
-  Airport dest_air;
+  char *airline;
+  char *org_air;
+  char *dest_air;
 
   int shed_dep;
   float dep_delay;
@@ -43,12 +43,8 @@ typedef struct Flight {
   bool canceled;
 } Flight;
 
-int hashAirlines(char* IATA_code) {
-  return (int)((char*)(int)IATA_code[0] + (char*)(int)IATA_code[1]);
-}
-
 typedef struct ListFlights {
-  void* l[MAX_LEN]
+  void *l[MAX_LEN];
   int last;
 } Liste;
 
@@ -58,3 +54,5 @@ typedef struct HashtableAirlines {
 
 typedef struct HashtableAirports {
 } TableAirports;
+
+int main() {}
