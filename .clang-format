@@ -1,0 +1,9 @@
+BasedOnStyle: GNU
+IndentWidth: 4
+AlignAfterOpenBracket: Align
+#AlignConsecutiveAssignments: AcrossEmptyLines.
+#AlignConsecutiveMacros: AcrossEmptyLines
+AllowShortBlocksOnASingleLine: Always
+BinPackParameters: false
+DerivePointerAlignment: false
+PointerAlignment: Left
