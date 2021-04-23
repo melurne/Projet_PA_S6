@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "hash.h"
+
 #define MAX_LEN 100
 
 typedef struct Airline {
