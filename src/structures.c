@@ -1,5 +1,12 @@
 #include "structures.h"
 
+void printIATA(char iata[], int size) {
+  for (int i = 0; i<size; i++)
+  {
+    printf("%c", iata[i]);
+  }
+}
+
 Flight blankFlight() {
   // Initailizes all fields to 0
   Flight f;
@@ -7,9 +14,15 @@ Flight blankFlight() {
   f.day = 0;
   f.weekday = 0;
 
-  f.airline[0] = f.airline[1] = '0';
-  f.org_air[0] = f.org_air[1] = f.org_air[2] = '0';
-  f.dest_air[0] = f.dest_air[1] = f.dest_air[2] = '0';
+  for (int i = 0; i<LEN_IATA_AIRLINE, i++)
+  {
+    f.airline[i] = '0';
+  }
+  for (int i = 0; i<LEN_IATA_AIRPORT; i++)
+  {
+    f.org_air[i] = '0';
+    f.dest_air[i] = '0';
+  }
 
   f.sched_dep = 0000;
   f.dep_delay = 0.;
@@ -30,9 +43,12 @@ void printFlight(Flight f) {
   printf("%d,", f.month);
   printf("%d,", f.day);
   printf("%d,", f.weekday);
-  printf("%c%c,", f.airline[0], f.airline[1]);
-  printf("%c%c%c,", f.org_air[0], f.org_air[1], f.org_air[2]);
-  printf("%c%c%c,", f.dest_air[0], f.dest_air[1], f.dest_air[2]);
+  printIATA(f.airline, LEN_IATA_AIRLINE);
+  printf(",");
+  printIATA(f.org_air, LEN_IATA_AIRPORT);
+  printf(",");
+  printIATA(f.dest_air, LEN_IATA_AIRPORT);
+  printf(",");
   printf("%d,", f.sched_dep);
   printf("%f,", f.dep_delay);
   printf("%f,", f.air_time);

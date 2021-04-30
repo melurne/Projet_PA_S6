@@ -9,20 +9,22 @@
 
 #define MASK_AIRLINES "ss"
 #define NARGS_AIRLINES 2
+#define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
 
 #define MASK_AIRPORTS "sssssff"
 #define NARGS_AIRPORTS 7
+#define LEN_IATA_AIRPORT 3
 #define MAX_LINE_LENGTH_AIRPORTS 140
 
 
 typedef struct Airline {
-    char* IATA_code;
+    char IATA_code[LEN_IATA_AIRLINE];
     char* name;
 } Airline;
 
 typedef struct Airport {
-    char* IATA_code;
+    char IATA_code[LEN_IATA_AIRPORT];
     char* name;
 
     char* city;
@@ -38,9 +40,9 @@ typedef struct Flight {
     int day;
     int weekday;
 
-    char airline[2];
-    char org_air[3];
-    char dest_air[3];
+    char airline[LEN_IATA_AIRLINE];
+    char org_air[LEN_IATA_AIRPORT];
+    char dest_air[LEN_IATA_AIRPORT];
 
     int sched_dep;
     float dep_delay;
@@ -69,3 +71,4 @@ typedef struct HashtableAirports {
 
 Flight blankFlight();
 void printFlight(Flight f);
+void printIATA(char[], int);
