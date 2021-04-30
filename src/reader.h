@@ -1,3 +1,2 @@
-#include "structures.h"
-
-Flight readFlight(FILE*, Flight*);
+void formatStr(char**);
+int readOneFlight(FILE*, Flight*);

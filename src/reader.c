@@ -3,15 +3,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "hash.h"
 #include "structures.h"
 
-int readFlight(FILE* fp, Flight* vol) {
+void formatStr(char** string) {
+  /*
+  Replaces all ',' in string with whitespaces
+  to allow formating using %s in sscanf
+  */
+  while (*string++ != NULL)
+  {
+    if (**string == ',')
+      **string = ' ';
+  }
+}
+
+int readOneFlight(FILE* fp, Flight* vol) {
   /*
     Reads the next line of fp and puts the content in vol
     returns :
       - 0 if everything went well
       - 1 if end of file is reached
+      - -1 if something is wrong with the data
   */
   // Retrieve the next line in the file
   char* line;
@@ -19,24 +31,13 @@ int readFlight(FILE* fp, Flight* vol) {
   if (fgets(line, max_lenght_line, fp) == NULL)
     // If the end of file has been reached, return 1
     return 1;
-
-  // Check to see if any field is empty (ie there are two ',' next to each other)
-  bool ismissingfields = false;
-  int i = 0;
-  while (line[i+1] != NULL && !ismissingfields)
-  {
-    if (line[i] == ',' && line[i+1] == ',')
-      ismissingfields = true;
-    i++;
-  }
-
-  // Placeholders for diverted ans canceled fields,
+  formatStr(&line);
+  // Placeholders for diverted and canceled fields,
   // will be converted to bool later
   int diverted = 0, canceled = 0;
-  if (!ismissingfields)
-  {
-    // If all fields are filled in
-    fscanf(line, "%d,%d,%d,%s,%s,%s,%d,%f,%f,%d,%d,%f,%d,%d",
+
+  // If all fields are filled in
+  int nargs = sscanf(line, "%d %d %d %s %s %s %d %f %f %d %d %f %d %d",
               &(vol->month),
               &(vol->day),
               &(vol->weekday),
@@ -52,14 +53,16 @@ int readFlight(FILE* fp, Flight* vol) {
               &diverted,
               &canceled
             );
-    vol->diverted = diverted == 1 ? true : false;
-    vol->canceled = canceled == 1 ? true : false;
+  // Converting diverted and canceled to bool
+  vol->diverted = diverted == 1 ? true : false;
+  vol->canceled = canceled == 1 ? true : false;
+  // If all fields were filled in
+  if (nargs == NARGS_FLIGHTS)
     return 0;
-  }
-  else
+  else if (nargs >= NARGS_FLIGHTS_MIN)     // If not all fields were filled but it was because the flight was canceled
   {
     // If delays and airtime are missing
-    fscanf(line, "%d,%d,%d,%s,%s,%s,%d,,,%d,%d,,%d,%d",
+    sscanf(line, "%d %d %d %s %s %s %d   %d %d  %d %d",
               &(vol->month),
               &(vol->day),
               &(vol->weekday),
@@ -72,13 +75,11 @@ int readFlight(FILE* fp, Flight* vol) {
               &diverted,
               &canceled
             );
-    // Initial values for missing fields is set to 0 here
-    vol->dep_delay = 0;
-    vol->arr_delay = 0;
-    vol->air_time = 0;
     // Converting diverted and canceled to bool
     vol->diverted = diverted == 1 ? true : false;
     vol->canceled = canceled == 1 ? true : false;
     return 0;
   }
+  else // If not enough fields were filled in
+    return -1;
 }

@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "structures.h"
 #include "hash.h"
 #include "reader.h"
-#include "structures.h"
+
 
 int main() {}
