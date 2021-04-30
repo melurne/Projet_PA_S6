@@ -1,3 +1,3 @@
 #include "structures.h"
 
-Flight readFlight(FILE*);
+Flight readFlight(FILE*, Flight*);

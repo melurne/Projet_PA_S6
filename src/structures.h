@@ -1,14 +1,25 @@
 #define MAX_LEN 100
-#define LEN_IATA_AIRLINES 2
-#define LEN_IATA_AIRPORTS 3
+
+#define MASK_FLIGHTS "dddsssdffddfdd"
+#define NARGS_FLIGHTS 14
+#define MAX_LINE_LENGTH_FLIGHTS 70
+
+#define MASK_AIRLINES "ss"
+#define NARGS_AIRLINES 2
+#define MAX_LINE_LENGTH_FLIGHTS 40
+
+#define MASK_AIRPORTS "sssssff"
+#define NARGS_AIRPORTS 7
+#define MAX_LINE_LENGTH_FLIGHTS 140
+
 
 typedef struct Airline {
-    char IATA_code[LEN_IATA_AIRLINES];
+    char* IATA_code;
     char* name;
 } Airline;
 
 typedef struct Airport {
-    char IATA_code[LEN_IATA_AIRPORTS];
+    char* IATA_code;
     char* name;
 
     char* city;
@@ -24,9 +35,9 @@ typedef struct Flight {
     int day;
     int weekday;
 
-    char airline[LEN_IATA_AIRLINES];
-    char org_air[LEN_IATA_AIRPORTS];
-    char dest_air[LEN_IATA_AIRPORTS];
+    char* airline;
+    char* org_air;
+    char* dest_air;
 
     int sched_dep;
     float dep_delay;
