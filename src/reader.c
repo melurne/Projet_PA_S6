@@ -25,18 +25,18 @@ int readOneFlight(FILE* fp, Flight* vol) {
       - 1 if end of file is reached
       - -1 if something is wrong with the data
   */
-  // Retrieve the next line in the file
+  // Retrieve the next line
+  // In the file in a string in order to be able to use it multiple times
   char* line;
   int max_lenght_line = MAX_LINE_LENGTH_FLIGHTS;
   if (fgets(line, max_lenght_line, fp) == NULL)
     // If the end of file has been reached, return 1
     return 1;
   formatStr(&line);
+
   // Placeholders for diverted and canceled fields,
   // will be converted to bool later
   int diverted = 0, canceled = 0;
-
-  // If all fields are filled in
   int nargs = sscanf(line, "%d %d %d %s %s %s %d %f %f %d %d %f %d %d",
               &(vol->month),
               &(vol->day),
@@ -53,13 +53,16 @@ int readOneFlight(FILE* fp, Flight* vol) {
               &diverted,
               &canceled
             );
-  // Converting diverted and canceled to bool
-  vol->diverted = diverted == 1 ? true : false;
-  vol->canceled = canceled == 1 ? true : false;
   // If all fields were filled in
   if (nargs == NARGS_FLIGHTS)
+  {
+    // Converting diverted and canceled to bool
+    vol->diverted = diverted == 1 ? true : false;
+    vol->canceled = canceled == 1 ? true : false;
     return 0;
-  else if (nargs >= NARGS_FLIGHTS_MIN)     // If not all fields were filled but it was because the flight was canceled
+  }
+  // If not all fields were filled but it was because the flight was canceled
+  else if (nargs == NARGS_FLIGHTS_MIN)
   {
     // If delays and airtime are missing
     sscanf(line, "%d %d %d %s %s %s %d   %d %d  %d %d",
