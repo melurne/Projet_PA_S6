@@ -69,6 +69,10 @@ typedef struct HashtableAirlines {
 typedef struct HashtableAirports {
 } TableAirports;
 
-Flight blankFlight();
-void printFlight(Flight f);
 void printIATA(char[], int);
+Flight blankFlight();
+Airline blankAirline();
+Airport blankAirport();
+void printAirline(Airline);
+void printAirport(Airport);
+void printFlight(Flight);

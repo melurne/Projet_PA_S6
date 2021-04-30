@@ -14,7 +14,7 @@ Flight blankFlight() {
   f.day = 0;
   f.weekday = 0;
 
-  for (int i = 0; i<LEN_IATA_AIRLINE, i++)
+  for (int i = 0; i<LEN_IATA_AIRLINE; i++)
   {
     f.airline[i] = '0';
   }
@@ -37,6 +37,54 @@ Flight blankFlight() {
   f.canceled = false;
 
   return f;
+}
+
+Airline blankAirline() {
+  // Initailizes all fields
+  Airline airline;
+  for (int i = 0; i<LEN_IATA_AIRLINE; i++)
+  {
+    airline.IATA_code[i] = '0';
+  }
+  strcpy(airline.name, "");
+  return airline;
+}
+
+Airport blankAirport() {
+  // Initailizes all fields
+  Airport airport;
+  for (int i = 0; i<LEN_IATA_AIRPORT; i++)
+  {
+    airport.IATA_code[i] = '0';
+  }
+  strcpy(airport.name, "");
+  strcpy(airport.city, "");
+  strcpy(airport.state, "");
+  strcpy(airport.country, "");
+  airport.latitude = 0.;
+  airport.longitude = 0.;
+  return airport;
+}
+
+void printAirline(Airline airline) {
+  printIATA(airline.IATA_code, LEN_IATA_AIRLINE);
+  printf(',');
+  printf("%s\n", airline.name);
+}
+
+void printAirport(Airport airport) {
+  printIATA(airport.IATA_code, LEN_IATA_AIRPORT);
+  printf(",");
+  printf("%s", airport.name);
+  printf(",");
+  printf("%s", airport.city);
+  printf(",");
+  printf("%s", airport.state);
+  printf(",");
+  printf("%s", airport.country);
+  printf(",");
+  printf("%f,", airport.latitude);
+  printf("%f\n", airport.longitude);
 }
 
 void printFlight(Flight f) {
