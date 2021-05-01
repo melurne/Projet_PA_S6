@@ -14,6 +14,7 @@
 
 #define MASK_AIRPORTS "sssssff"
 #define NARGS_AIRPORTS 7
+#define NARGS_AIRPORTS_MIN 5
 #define LEN_IATA_AIRPORT 3
 #define MAX_LINE_LENGTH_AIRPORTS 140
 
