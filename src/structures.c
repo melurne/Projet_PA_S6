@@ -1,4 +1,7 @@
+#include<stdio.h>
+#include<string.h>
 #include "structures.h"
+#include "hash.h"
 
 void printIATA(char iata[], int size) {
   for (int i = 0; i<size; i++)
@@ -68,7 +71,7 @@ Airport blankAirport() {
 
 void printAirline(Airline airline) {
   printIATA(airline.IATA_code, LEN_IATA_AIRLINE);
-  printf(',');
+  printf(",");
   printf("%s\n", airline.name);
 }
 
@@ -106,3 +109,4 @@ void printFlight(Flight f) {
   printf("%d,", f.diverted ? 1 : 0);
   printf("%d\n", f.canceled ? 1 : 0);
 }
+

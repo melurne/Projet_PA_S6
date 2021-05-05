@@ -107,8 +107,8 @@ int readOneAirline(FILE* fp, Airline* airline) {
     return 1;
 
   int nargs = sscanf(line, MASK_AIRLINES,
-                        &(airline.IATA_code),
-                        &(airline.name)
+                        &(airline->IATA_code),
+                        &(airline->name)
                           );
   if (nargs == NARGS_AIRLINES)
     return 0;
@@ -130,14 +130,15 @@ int readOneAirport(FILE* fp, Airport* airport) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRPORTS) == 1)
     return 1;
 
+
   int nargs = sscanf(line, MASK_AIRPORTS,
-                        &(airport.IATA_code),
-                        &(airport.name),
-                        &(airport.city),
-                        &(airport.state),
-                        &(airport.coutry),
-                        &(airport.latitude),
-                        &(airport.longitude)
+                        &(airport->IATA_code),
+                        &(airport->name),
+                        &(airport->city),
+                        &(airport->state),
+                        &(airport->country),
+                        &(airport->latitude),
+                        &(airport->longitude)
                           );
   if (nargs == NARGS_AIRPORTS || nargs == NARGS_AIRPORTS_MIN)
     return 0;

@@ -82,3 +82,7 @@ Airport blankAirport();
 void printAirline(Airline);
 void printAirport(Airport);
 void printFlight(Flight);
+
+TableAirports airports;
+TableAirlines airlines;
+
