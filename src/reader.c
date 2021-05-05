@@ -42,7 +42,7 @@ int readOneFlight(FILE* fp, Flight* vol) {
   // Placeholders for diverted and canceled fields,
   // will be converted to bool later
   int diverted = 0, canceled = 0;
-  int nargs = sscanf(line, "%d %d %d %s %s %s %d %f %f %d %d %f %d %d",
+  int nargs = sscanf(line, MASK_FLIGHTS,
               &(vol->month),
               &(vol->day),
               &(vol->weekday),
@@ -70,7 +70,7 @@ int readOneFlight(FILE* fp, Flight* vol) {
   else if (nargs == NARGS_FLIGHTS_MIN)
   {
     // If delays and airtime are missing
-    sscanf(line, "%d %d %d %s %s %s %d   %d %d  %d %d",
+    sscanf(line, MASK_FLIGHTS_MISSING,
               &(vol->month),
               &(vol->day),
               &(vol->weekday),
@@ -106,7 +106,7 @@ int readOneAirline(FILE* fp, Airline* airline) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRLINES) == 1)
     return 1;
 
-  int nargs = sscanf(line, "%s %s",
+  int nargs = sscanf(line, MASK_AIRLINES,
                         &(airline.IATA_code),
                         &(airline.name)
                           );
@@ -130,7 +130,7 @@ int readOneAirport(FILE* fp, Airport* airport) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRPORTS) == 1)
     return 1;
 
-  int nargs = sscanf(line, "%s %s %s %s %s %f %f",
+  int nargs = sscanf(line, MASK_AIRPORTS,
                         &(airport.IATA_code),
                         &(airport.name),
                         &(airport.city),
