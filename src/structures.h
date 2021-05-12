@@ -70,12 +70,12 @@ typedef struct ListFlights {
 
 typedef struct HashtableAirlines {
   Airline content[MAX_LEN_AIRLINES];
-  int (*hash)(char*);
+  int (*hash)(const char*);
 } TableAirlines;
 
 typedef struct HashtableAirports {
   Airport content[MAX_LEN_AIRPORTS];
-  int (*hash)(char*);
+  int (*hash)(const char*);
 } TableAirports;
 
 void printIATA(char[], int);

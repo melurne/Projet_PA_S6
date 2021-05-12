@@ -9,7 +9,8 @@
 #include "sorter.h"
 
 int main() {
-  HashtableAirlines airlines;
+  TableAirlines airlines;
   airlines.hash = &get_index_airports;
-  sortAirports(&airlines)
+  sortAirlines(&airlines);
 }
+

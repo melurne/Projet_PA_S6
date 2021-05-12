@@ -46,7 +46,9 @@ Airline blankAirline() {
   {
     airline.IATA_code[i] = '0';
   }
-  strcpy(airline.name, "");
+  //strcpy(airline.name, "");
+  airline.name[0] = 0;
+
   return airline;
 }
 
@@ -57,10 +59,17 @@ Airport blankAirport() {
   {
     airport.IATA_code[i] = '0';
   }
+  /*
   strcpy(airport.name, "");
   strcpy(airport.city, "");
   strcpy(airport.state, "");
   strcpy(airport.country, "");
+  */
+  airport.name[0] = 0;
+  airport.city[0] = 0;
+  airport.state[0] = 0;
+  airport.country[0] = 0;
+
   airport.latitude = 0.;
   airport.longitude = 0.;
   return airport;

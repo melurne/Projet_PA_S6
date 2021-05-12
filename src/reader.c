@@ -17,11 +17,12 @@ void formatStr(char** string) {
   }
 }
 
-int retrieveNextLine(FILE* fp, char** line, int max_lenght_line) {
-  if (fgets(*line, max_lenght_line, fp) == NULL)
+int retrieveNextLine(FILE* fp, char* line, int max_lenght_line) {
+  if (fgets(line, max_lenght_line, fp) == NULL)
     // If the end of file has been reached, return 1
     return 1;
-  formatStr(line);
+
+  formatStr(&line);
   return 0;
 }
 
@@ -35,8 +36,8 @@ int readOneFlight(FILE* fp, Flight* vol) {
   */
   // Retrieve the next line
   // In the file in a string in order to be able to use it multiple times
-  char* line;
-  if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_FLIGHTS) == 1)
+  char* line = malloc(sizeof(char)*MAX_LINE_LENGTH_FLIGHTS);
+  if (retrieveNextLine(fp, line, MAX_LINE_LENGTH_FLIGHTS) == 1)
     return 1;
 
   // Placeholders for diverted and canceled fields,
@@ -90,6 +91,7 @@ int readOneFlight(FILE* fp, Flight* vol) {
   }
   else // If not enough fields were filled in
     return -1;
+  free(line);
 }
 
 int readOneAirline(FILE* fp, Airline* airline) {
@@ -102,18 +104,19 @@ int readOneAirline(FILE* fp, Airline* airline) {
   */
   // Retrieve the next line
   // In the file in a string in order to be able to use it multiple times
-  char* line;
-  if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRLINES) == 1)
+  char* line = malloc(sizeof(char)*MAX_LINE_LENGTH_AIRLINES);
+  if (retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRLINES) == 1)
     return 1;
 
   int nargs = sscanf(line, MASK_AIRLINES,
-                        &(airline.IATA_code),
-                        &(airline.name)
+                        &(airline->IATA_code),
+                        &(airline->name)
                           );
   if (nargs == NARGS_AIRLINES)
     return 0;
   else
     return -1;
+  free(line);
 }
 
 int readOneAirport(FILE* fp, Airport* airport) {
@@ -127,17 +130,17 @@ int readOneAirport(FILE* fp, Airport* airport) {
   // Retrieve the next line
   // In the file in a string in order to be able to use it multiple times
   char* line;
-  if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRPORTS) == 1)
+  if (retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRPORTS) == 1)
     return 1;
 
   int nargs = sscanf(line, MASK_AIRPORTS,
-                        &(airport.IATA_code),
-                        &(airport.name),
-                        &(airport.city),
-                        &(airport.state),
-                        &(airport.coutry),
-                        &(airport.latitude),
-                        &(airport.longitude)
+                        &(airport->IATA_code),
+                        &(airport->name),
+                        &(airport->city),
+                        &(airport->state),
+                        &(airport->country),
+                        &(airport->latitude),
+                        &(airport->longitude)
                           );
   if (nargs == NARGS_AIRPORTS || nargs == NARGS_AIRPORTS_MIN)
     return 0;

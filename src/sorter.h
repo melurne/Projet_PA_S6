@@ -1,1 +1,1 @@
-void sortAirports(HashtableAirlines*);
+void sortAirlines(TableAirlines*);
