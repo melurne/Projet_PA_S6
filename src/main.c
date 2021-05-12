@@ -6,6 +6,10 @@
 #include "structures.h"
 #include "hash.h"
 #include "reader.h"
+#include "sorter.h"
 
-
-int main() {}
+int main() {
+  HashtableAirlines airlines;
+  airlines.hash = &get_index_airports;
+  sortAirports(&airlines)
+}

@@ -1,12 +1,14 @@
 - Parsing csv files to usable data structures
+  - parsed <>
+  - put unto structs
 
 - request file ?
 
-- .clang-format file ?
++ .clang-format file ? <>
 
-- resolve duplications
++ resolve duplications <>
 
-- organizing branches 
++ organizing branches <>
 
 - find spelling errors
 

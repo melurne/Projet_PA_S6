@@ -7,12 +7,14 @@
 #define NARGS_FLIGHTS 14
 #define NARGS_FLIGHTS_MIN 11
 #define MAX_LINE_LENGTH_FLIGHTS 70
+#define FLIGHTS_PATH "data/flights.csv"
 
 #define MASK_AIRLINES "%s %s"
 #define NARGS_AIRLINES 2
 #define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
 #define MAX_LEN_AIRLINES 20 
+#define AIRLINES_PATH "data/airlines.csv"
 
 #define MASK_AIRPORTS "%s %s %s %s %s %f %f"
 #define NARGS_AIRPORTS 7
@@ -20,6 +22,7 @@
 #define LEN_IATA_AIRPORT 3
 #define MAX_LINE_LENGTH_AIRPORTS 140
 #define MAX_LEN_AIRPORTS 350  
+#define AIRPORTS_PATH "data/airports.csv"
 
 typedef struct Airline {
     char IATA_code[LEN_IATA_AIRLINE];
