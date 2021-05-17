@@ -11,10 +11,12 @@
 void sortAirlines(TableAirlines* airlines) {
   FILE* fp = fopen(AIRLINES_PATH, "r"); 
   Airline token = blankAirline();
+  printf("test\n");
   int flag = 0;
   while ((flag = readOneAirline(fp, &token)) != 1) 
   { 
     if (flag != -1)
       airlines->content[airlines->hash(token.IATA_code)] = token;    
   }
+  printf("fin\n");
 }

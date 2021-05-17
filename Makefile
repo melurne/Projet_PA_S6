@@ -7,7 +7,7 @@ lib/hashairlines.o : hashFunc/hashairlines.c
 lib/hashairports.o : hashFunc/hashairports.c
 	gcc -c -g -w -Wall -Wextra hashFunc/hashairports.c -o lib/hashairports.o
 
-lib/structures.o : src/structures.c
+lib/structures.o : src/structures.c src/structures.h
 	gcc -c -g -w -Wall -Wextra src/structures.c -o lib/structures.o
 
 lib/reader.o : src/reader.c

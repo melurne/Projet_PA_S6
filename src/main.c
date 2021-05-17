@@ -12,5 +12,6 @@ int main() {
   TableAirlines airlines;
   airlines.hash = &get_index_airports;
   sortAirlines(&airlines);
+  return 0;
 }
 

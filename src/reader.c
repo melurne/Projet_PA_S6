@@ -5,16 +5,18 @@
 
 #include "structures.h"
 
-void formatStr(char** string) {
+void formatStr(char* string) {
   /*
-  Replaces all ',' in string with whitespaces
-  to allow formating using %s in sscanf
+    Replaces all ',' in string with whitespaces
+    to allow formating using %s in sscanf
   */
-  while (*string++ != NULL)
-  {
-    if (**string == ',')
-      **string = ' ';
+  char *current_pos = strchr(string,',');
+  while (current_pos) {
+    *current_pos = '\t';
+    current_pos = strchr(current_pos,',');
   }
+  current_pos = strchr(string,'\n');
+  *current_pos = 0;
 }
 
 int retrieveNextLine(FILE* fp, char* line, int max_lenght_line) {
@@ -22,7 +24,7 @@ int retrieveNextLine(FILE* fp, char* line, int max_lenght_line) {
     // If the end of file has been reached, return 1
     return 1;
 
-  formatStr(&line);
+  formatStr(line);
   return 0;
 }
 
@@ -59,13 +61,14 @@ int readOneFlight(FILE* fp, Flight* vol) {
               &diverted,
               &canceled
                 );
+  int value = 0;
   // If all fields were filled in
   if (nargs == NARGS_FLIGHTS)
   {
     // Converting diverted and canceled to bool
     vol->diverted = diverted == 1 ? true : false;
     vol->canceled = canceled == 1 ? true : false;
-    return 0;
+    value = 0;
   }
   // If not all fields were filled but it was because the flight was canceled
   else if (nargs == NARGS_FLIGHTS_MIN)
@@ -87,11 +90,14 @@ int readOneFlight(FILE* fp, Flight* vol) {
     // Converting diverted and canceled to bool
     vol->diverted = diverted == 1 ? true : false;
     vol->canceled = canceled == 1 ? true : false;
-    return 0;
+    value = 0;
   }
   else // If not enough fields were filled in
-    return -1;
+    value = -1;
+
   free(line);
+  return value;
+  
 }
 
 int readOneAirline(FILE* fp, Airline* airline) {
@@ -112,11 +118,12 @@ int readOneAirline(FILE* fp, Airline* airline) {
                         &(airline->IATA_code),
                         &(airline->name)
                           );
+  free(line);
   if (nargs == NARGS_AIRLINES)
     return 0;
   else
     return -1;
-  free(line);
+  
 }
 
 int readOneAirport(FILE* fp, Airport* airport) {
@@ -129,7 +136,7 @@ int readOneAirport(FILE* fp, Airport* airport) {
   */
   // Retrieve the next line
   // In the file in a string in order to be able to use it multiple times
-  char* line;
+  char* line = malloc(sizeof(char)*MAX_LINE_LENGTH_AIRPORTS);
   if (retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRPORTS) == 1)
     return 1;
 
@@ -146,4 +153,5 @@ int readOneAirport(FILE* fp, Airport* airport) {
     return 0;
   else
     return -1;
+  free(line);
 }

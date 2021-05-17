@@ -1,5 +1,17 @@
 #include "structures.h"
 
+void clearString(char str[], int size) {
+  /*
+  for (int i = 0; i < size-1; i++)
+  {
+    str[i] = '.';
+  }
+  str[size-1] = '\0';
+  */
+  str[0] = '0';
+  str[1] = '\0';
+}
+
 void printIATA(char iata[], int size) {
   for (int i = 0; i<size; i++)
   {
@@ -14,15 +26,9 @@ Flight blankFlight() {
   f.day = 0;
   f.weekday = 0;
 
-  for (int i = 0; i<LEN_IATA_AIRLINE; i++)
-  {
-    f.airline[i] = '0';
-  }
-  for (int i = 0; i<LEN_IATA_AIRPORT; i++)
-  {
-    f.org_air[i] = '0';
-    f.dest_air[i] = '0';
-  }
+  clearString(f.airline, LEN_IATA_AIRLINE+1);
+  clearString(f.org_air, LEN_IATA_AIRPORT+1);
+  clearString(f.dest_air, LEN_IATA_AIRPORT+1);
 
   f.sched_dep = 0000;
   f.dep_delay = 0.;
@@ -42,12 +48,10 @@ Flight blankFlight() {
 Airline blankAirline() {
   // Initailizes all fields
   Airline airline;
-  for (int i = 0; i<LEN_IATA_AIRLINE; i++)
-  {
-    airline.IATA_code[i] = '0';
-  }
-  //strcpy(airline.name, "");
-  airline.name[0] = 0;
+  clearString(airline.IATA_code, LEN_IATA_AIRLINE+1);
+  clearString(airline.name, AIRLINES_NAME_BUFFER_LENGTH+1);
+  
+  printf("%s\n", airline.name);
 
   return airline;
 }
@@ -65,10 +69,10 @@ Airport blankAirport() {
   strcpy(airport.state, "");
   strcpy(airport.country, "");
   */
-  airport.name[0] = 0;
-  airport.city[0] = 0;
-  airport.state[0] = 0;
-  airport.country[0] = 0;
+  clearString(airport.name, AIRPORTS_NAME_BUFFER_LENGTH+1);
+  clearString(airport.city, AIRPORTS_CITY_BUFFER_LENGTH+1);
+  clearString(airport.state, AIRPORTS_STATE_BUFFER_LENGTH+1);
+  clearString(airport.country, AIRPORTS_COUNTRY_BUFFER_LENGTH+1);
 
   airport.latitude = 0.;
   airport.longitude = 0.;
