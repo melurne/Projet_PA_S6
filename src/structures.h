@@ -2,6 +2,8 @@
 
 #define MAX_LEN 100
 
+#define SEPARATOR ","
+
 #define MASK_FLIGHTS "%d %d %d %s %s %s %d %f %f %d %d %f %d %d"
 #define MASK_FLIGHTS_MISSING "%d %d %d %s %s %s %d   %d %d  %d %d"
 #define NARGS_FLIGHTS 14
@@ -9,7 +11,8 @@
 #define MAX_LINE_LENGTH_FLIGHTS 70
 #define FLIGHTS_PATH "data/flights.csv"
 
-#define MASK_AIRLINES "%s\t%s"
+//#define MASK_AIRLINES "%s\t%s"
+#define MASK_AIRLINES {'s', 's'}
 #define NARGS_AIRLINES 2
 #define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
