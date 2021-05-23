@@ -37,16 +37,21 @@ int readOneAirline(FILE* fp, Airline* airline) {
   if (retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRLINES) == 1)
     return 1;
 
-  char* strToken = strtok(line, SEPARATOR);
-  if (strToken == NULL)
-  {
-  	free(line);
-  	return -1;
-  }
-  strcpy(airline->IATA_code, strToken);
 
-  strToken = strtok(NULL, SEPARATOR);
-  strcpy(airline->name, strToken);
+  char *next;
+  char *curr = line;
+  next = strchr(curr, ',');
+  if (next == NULL)
+  {
+    free(line);
+    return -1;
+  }
+
+  memcpy(airline->IATA_code, curr, next-curr);
+  curr = next + 1;
+
+  next = strchr(curr, ',');
+  memcpy(airline->name, curr, next-curr);
 
   printf("%s %s\n", airline->IATA_code, airline->name);
   free(line);

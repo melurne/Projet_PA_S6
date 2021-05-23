@@ -13,10 +13,14 @@ void sortAirlines(TableAirlines* airlines) {
   Airline token = blankAirline();
   printf("test\n");
   int flag = 0;
+  
+  char* line;
+  retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRLINES);
   while ((flag = readOneAirline(fp, &token)) != 1) 
   { 
-    if (flag != -1)
-      airlines->content[airlines->hash(token.IATA_code)] = token;    
+    flag = 0;
+    //if (flag != -1)
+      //airlines->content[airlines->hash(token.IATA_code)] = token;    
   }
   printf("fin\n");
 }
