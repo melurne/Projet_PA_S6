@@ -14,13 +14,52 @@ void sortAirlines(TableAirlines* airlines) {
   printf("test\n");
   int flag = 0;
   
-  char* line;
-  retrieveNextLine(fp, line, MAX_LINE_LENGTH_AIRLINES);
+  char* line = NULL;
+  retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRLINES);
   while ((flag = readOneAirline(fp, &token)) != 1) 
   { 
     flag = 0;
     //if (flag != -1)
       //airlines->content[airlines->hash(token.IATA_code)] = token;    
   }
+  fclose(fp);
+  printf("fin\n");
+}
+
+void sortAirports(/*TableAirports* airports*/) {
+  FILE* fp = fopen("data/airports.csv", "r"); 
+  Airport token = blankAirport();
+  printf("test\n");
+  int flag = 0;
+  
+  char* line = NULL;
+  size_t n = MAX_LINE_LENGTH_AIRPORTS;
+  retrieveNextLine(fp, &line, n);
+  while ((flag = readOneAirport(fp, &token)) != 1) 
+  { 
+    flag = 0;
+    //if (flag != -1)
+      //airlines->content[airlines->hash(token.IATA_code)] = token;    
+  }
+  fclose(fp);
+  printf("fin\n");
+}
+
+void sortFlights(/*TableAirports* airports*/) {
+  FILE* fp = fopen("data/flights.csv", "r"); 
+  Flight token = blankFlight();
+  printf("test\n");
+  int flag = 0;
+  
+  char* line = NULL;
+  size_t n = MAX_LINE_LENGTH_FLIGHTS;
+  retrieveNextLine(fp, &line, n);
+  while ((flag = readOneFlight(fp, &token)) != 1) 
+  { 
+    flag = 0;
+    //if (flag != -1)
+      //airlines->content[airlines->hash(token.IATA_code)] = token;    
+  }
+  fclose(fp);
   printf("fin\n");
 }

@@ -2,7 +2,7 @@
 
 #define MAX_LEN 100
 
-#define SEPARATOR ","
+#define SEPARATOR ','
 
 #define MASK_FLIGHTS "%d %d %d %s %s %s %d %f %f %d %d %f %d %d"
 #define MASK_FLIGHTS_MISSING "%d %d %d %s %s %s %d   %d %d  %d %d"
@@ -12,7 +12,7 @@
 #define FLIGHTS_PATH "data/flights.csv"
 
 //#define MASK_AIRLINES "%s\t%s"
-#define MASK_AIRLINES {'s', 's'}
+//#define MASK_AIRLINES {'s', 's'}
 #define NARGS_AIRLINES 2
 #define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
@@ -33,17 +33,17 @@
 #define AIRPORTS_COUNTRY_BUFFER_LENGTH 5
 
 typedef struct Airline {
-    char IATA_code[LEN_IATA_AIRLINE+1];
-    char name[AIRLINES_NAME_BUFFER_LENGTH+1];
+    char* IATA_code;
+    char* name;
 } Airline;
 
 typedef struct Airport {
-    char IATA_code[LEN_IATA_AIRPORT+1];
-    char name[AIRPORTS_NAME_BUFFER_LENGTH+1];
+    char* IATA_code;
+    char* name;
 
-    char city[AIRPORTS_CITY_BUFFER_LENGTH+1];
-    char state[AIRPORTS_STATE_BUFFER_LENGTH+1];
-    char country[AIRPORTS_COUNTRY_BUFFER_LENGTH+1];
+    char* city;
+    char* state;
+    char* country;
 
     float latitude;
     float longitude;
@@ -54,9 +54,9 @@ typedef struct Flight {
     int day;
     int weekday;
 
-    char airline[LEN_IATA_AIRLINE+1];
-    char org_air[LEN_IATA_AIRPORT+1];
-    char dest_air[LEN_IATA_AIRPORT+1];
+    char* airline;
+    char* org_air;
+    char* dest_air;
 
     int sched_dep;
     float dep_delay;
@@ -86,7 +86,7 @@ typedef struct HashtableAirports {
   int (*hash)(const char*);
 } TableAirports;
 
-void clearString(char[], int); 
+void clearString(char*); 
 void printIATA(char[], int);
 Flight blankFlight();
 Airline blankAirline();

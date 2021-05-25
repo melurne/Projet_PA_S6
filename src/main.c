@@ -10,8 +10,13 @@
 
 int main() {
   TableAirlines airlines;
-  airlines.hash = &get_index_airports;
+  airlines.hash = &get_index_airlines;
   sortAirlines(&airlines);
+  
+  //ableAirports airports;
+  //airlines.hash = &get_index_airports;
+  sortAirports(/*&airports*/);
+  sortFlights();
   return 0;
 }
 
