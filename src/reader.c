@@ -7,8 +7,7 @@
 
 void formatStr(char* string) {
   /*
-    Replaces all ',' in string with whitespaces
-    to allow formating using %s in sscanf
+    Replaces the \n character with \0 to properly end the string
   */
   char* current_pos = strchr(string,'\n');
   *current_pos = 0;
@@ -24,8 +23,14 @@ int retrieveNextLine(FILE* fp, char** line, size_t max_lenght_line) {
 }
 
 void getNextArg(char** curr, char** next, char** target) {
+  /* 
+    Fetches the next token in the line
+    Puts the result in target
+  */
   strncpy(*target, *curr, (*next)-(*curr));
+  // Properly finishes the string
   (*target)[(*next)-(*curr)] = 0;
+  // Update curr and next to point to the next token in the string
   *curr = *next + 1;
   *next = strchr(*curr, ',');
 }
@@ -77,6 +82,7 @@ int readOneAirport(FILE* fp, Airport* airport) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRPORTS) == 1)
     return 1;
 
+  // We allocate a tmp buffer to use when the arguments are not strings and we have to cast them to something else
   char* tmp = malloc(sizeof(char)*20);
   char *next;
   char *curr = line;
@@ -86,6 +92,9 @@ int readOneAirport(FILE* fp, Airport* airport) {
     free(line);
     return -1;
   }
+
+  // We use atoi and atof to cast arguments to int and float respectively
+  // When the arguments are strings, we just copy the content of the token to the corresponding argument directly
 
   getNextArg(&curr, &next, &(airport->IATA_code));
   getNextArg(&curr, &next, &(airport->name));
@@ -101,7 +110,6 @@ int readOneAirport(FILE* fp, Airport* airport) {
   tmp[next-curr+1] = 0;
   airport->latitude = atof(tmp);
 
-  //printf("%s %s %s %s %f %f\n", airport->IATA_code, airport->name, airport->city, airport->country, airport->longitude, airport->latitude);
   free(line);
   free(tmp);
   return 0;
@@ -109,7 +117,7 @@ int readOneAirport(FILE* fp, Airport* airport) {
 
 int readOneFlight(FILE* fp, Flight* f) {
   /*
-    Reads the next line of fp and puts the content in airport
+    Reads the next line of fp and puts the content in f
     returns :
       - 0 if everything went well
       - 1 if end of file is reached
@@ -120,6 +128,7 @@ int readOneFlight(FILE* fp, Flight* f) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_FLIGHTS) == 1)
     return 1;
 
+  // We allocate a tmp buffer to use when the arguments are not strings and we have to cast them to something else
   char* tmp = malloc(sizeof(char)*20);
   char *next;
   char *curr = line;
@@ -130,12 +139,14 @@ int readOneFlight(FILE* fp, Flight* f) {
     return -1;
   }
 
+  // We use atoi and atof to cast arguments to int and float respectively
+  // When the arguments are strings, we just copy the content of the token to the corresponding argument directly
+
   getNextArg(&curr, &next, &tmp);
   f->month = atoi(tmp);
   getNextArg(&curr, &next, &tmp);
   f->day = atoi(tmp);
   getNextArg(&curr, &next, &tmp);
-  printf("%s\n", tmp);
   f->weekday = atoi(tmp);
 
   getNextArg(&curr, &next, &(f->airline));
@@ -165,9 +176,6 @@ int readOneFlight(FILE* fp, Flight* f) {
   tmp[next-curr+1] = 0;
   f->canceled = atoi(tmp) == 1;
   
-  printf("%d %d %d\n", f->month, f->day, f->weekday);
-  //printFlight(*f);
-  //printf("%s %s %s %s %f %f\n", airport->IATA_code, airport->name, airport->city, airport->country, airport->longitude, airport->latitude);
   free(line);
   free(tmp);
   return 0;

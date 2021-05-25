@@ -33,8 +33,7 @@ void sortAirports(/*TableAirports* airports*/) {
   int flag = 0;
   
   char* line = NULL;
-  size_t n = MAX_LINE_LENGTH_AIRPORTS;
-  retrieveNextLine(fp, &line, n);
+  retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRPORTS);
   while ((flag = readOneAirport(fp, &token)) != 1) 
   { 
     flag = 0;
@@ -52,8 +51,7 @@ void sortFlights(/*TableAirports* airports*/) {
   int flag = 0;
   
   char* line = NULL;
-  size_t n = MAX_LINE_LENGTH_FLIGHTS;
-  retrieveNextLine(fp, &line, n);
+  retrieveNextLine(fp, &line, MAX_LINE_LENGTH_FLIGHTS);
   while ((flag = readOneFlight(fp, &token)) != 1) 
   { 
     flag = 0;
