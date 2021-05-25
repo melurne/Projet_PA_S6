@@ -12,10 +12,15 @@ int main() {
   TableAirlines airlines;
   airlines.hash = &get_index_airlines;
   sortAirlines(&airlines);
-  
-  //ableAirports airports;
-  //airlines.hash = &get_index_airports;
-  sortAirports(/*&airports*/);
+
+  //Airline token = accessAirline(airlines, "AA");
+  //printAirline(token);
+
+  TableAirports airports;
+  airports.hash = &get_index_airports;
+  sortAirports(&airports);
+  //printAirport(accessAirport(airports, "YUM"));
+
   sortFlights();
   return 0;
 }

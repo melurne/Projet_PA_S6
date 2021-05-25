@@ -48,7 +48,6 @@ int readOneAirline(FILE* fp, Airline* airline) {
   if (retrieveNextLine(fp, &line, MAX_LINE_LENGTH_AIRLINES) == 1)
     return 1;
 
-
   char *next;
   char *curr = line;
   next = strchr(curr, ',');
@@ -64,7 +63,6 @@ int readOneAirline(FILE* fp, Airline* airline) {
   strcpy(airline->name, curr);
   airline->name[next-curr+1] = 0;
 
-  printf("%s %s\n", airline->IATA_code, airline->name);
   free(line);
 	return 0;
 }

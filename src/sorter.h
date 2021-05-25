@@ -1,3 +1,3 @@
 void sortAirlines(TableAirlines*);
-void sortAirports(/*TableAirports**/);
-void sortFlights();
+void sortAirports(TableAirports*);
+void sortFlights(TreeFlights*);

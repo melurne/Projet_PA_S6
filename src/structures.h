@@ -71,10 +71,13 @@ typedef struct Flight {
     bool canceled;
 } Flight;
 
-typedef struct ListFlights {
-    void* l[MAX_LEN];
-    int last;
-} Liste;
+typedef struct NodeFlights {
+    Flight f;
+    struct NodeFlights* left;
+    struct NodeFlights* right;
+} Node;
+
+typedef Node* TreeFlights;
 
 typedef struct HashtableAirlines {
   Airline content[MAX_LEN_AIRLINES];
@@ -94,3 +97,9 @@ Airport blankAirport();
 void printAirline(Airline);
 void printAirport(Airport);
 void printFlight(Flight);
+
+void insertAirline(TableAirlines*, Airline);
+void insertAirport(TableAirports*, Airport);
+
+Airline accessAirline(TableAirlines, const char*);
+Airport accessAirport(TableAirports, const char*);

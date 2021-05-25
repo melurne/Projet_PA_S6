@@ -58,8 +58,6 @@ Airline blankAirline() {
   clearString(airline.IATA_code);
   clearString(airline.name);
   
-  printf("%s\n", airline.name);
-
   return airline;
 }
 
@@ -85,42 +83,50 @@ Airport blankAirport() {
 }
 
 void printAirline(Airline airline) {
-  printIATA(airline.IATA_code, LEN_IATA_AIRLINE);
-  printf(',');
-  printf("%s\n", airline.name);
+  printf("%s,%s\n", airline.IATA_code, airline.name);
 }
 
 void printAirport(Airport airport) {
-  printIATA(airport.IATA_code, LEN_IATA_AIRPORT);
-  printf(",");
-  printf("%s", airport.name);
-  printf(",");
-  printf("%s", airport.city);
-  printf(",");
-  printf("%s", airport.state);
-  printf(",");
-  printf("%s", airport.country);
-  printf(",");
-  printf("%f,", airport.latitude);
-  printf("%f\n", airport.longitude);
+  printf( "%s,%s,%s,%s,%s,%f,%f\n", 
+          airport.IATA_code, 
+          airport.name, 
+          airport.city, 
+          airport.state, 
+          airport.country, 
+          airport.latitude, 
+          airport.longitude);
 }
 
 void printFlight(Flight f) {
-  printf("%d,", f.month);
-  printf("%d,", f.day);
-  printf("%d,", f.weekday);
-  printIATA(f.airline, LEN_IATA_AIRLINE);
-  printf(",");
-  printIATA(f.org_air, LEN_IATA_AIRPORT);
-  printf(",");
-  printIATA(f.dest_air, LEN_IATA_AIRPORT);
-  printf(",");
-  printf("%d,", f.sched_dep);
-  printf("%f,", f.dep_delay);
-  printf("%f,", f.air_time);
-  printf("%d,", f.dist);
-  printf("%d,", f.sched_arr);
-  printf("%f,", f.arr_delay);
-  printf("%d,", f.diverted ? 1 : 0);
-  printf("%d\n", f.canceled ? 1 : 0);
+  printf( "%d,%d,%d,%s,%s,%s,%d,%f,%f,%d,%d,%f,%f,%f\n", 
+          f.month,
+          f.day,
+          f.weekday,
+          f.airline,
+          f.org_air,
+          f.dest_air,
+          f.sched_dep,
+          f.dep_delay,
+          f.air_time,
+          f.dist,
+          f.sched_arr,
+          f.arr_delay,
+          f.diverted ? 1 : 0,
+          f.canceled ? 1 : 0);
+}
+
+void insertAirline(TableAirlines* airlines, Airline token) {
+  airlines->content[airlines->hash(token.IATA_code)] = token;
+}
+
+void insertAirports(TableAirports* airports, Airport token) {
+  airports->content[airports->hash(token.IATA_code)] = token;
+}
+
+Airline accessAirline(TableAirlines airlines, const char* key) {
+  return airlines.content[airlines.hash(key)];
+}
+
+Airport accessAirport(TableAirports airports, const char* key) {
+  return airports.content[airports.hash(key)];
 }

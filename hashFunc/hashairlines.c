@@ -22,10 +22,10 @@ int get_index_airlines(const char* key) {
         f2 += "OY"[i] * key[i];
     }
     i = (Gairlines[f1 % NGairlines] + Gairlines[f2 % NGairlines]) % NGairlines;
-    if (i < NKairlines && strcmp(key, Kairlines[i]) == 0)
-        return i;
+    //if (i < NKairlines && strcmp(key, Kairlines[i]) == 0)
+    return i;
 
-    return -1;
+    //return -1;
 }
 /*
 int main()
@@ -35,10 +35,10 @@ int main()
                     "abc", "x", "99"};
 
     for (i = 0; i < 4; i++)
-        assert(get_index(junk[i]) == -1);
+        assert(get_index_airlines(junk[i]) == -1);
 
     for (i = 0; i < NKairlines; i++)
-        assert(get_index(K[i]) == i);
+        assert(get_index_airlines(Kairlines[i]) == i);
 
     printf("OK\n");
     return 0;
