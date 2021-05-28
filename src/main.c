@@ -54,7 +54,8 @@ int main() {
   printf("\nchanged_flights 12-29\n");
   changed_flights(&data, 12, 29);
 
-
+  printf("\navg_flight_duration LAX SFO\n");
+  avg_flight_duration(&data, "LAX", "SFO");
 
   return 0;
 }

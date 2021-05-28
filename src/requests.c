@@ -270,3 +270,23 @@ void changed_flights(Tables* data, int month, int day) {
 		}
 	}
 }
+
+void avg_flight_duration(Tables* data, char* port_id1, char* port_id2) {
+	float sum = 0;
+	int count = 0;
+	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	{
+		for (int j = 0; j <= data->flights.dates[i].last; j++)
+		{
+			if (	!(data->flights.dates[i].content[j].diverted || data->flights.dates[i].content[j].canceled) &&
+						(	((strcmp(data->flights.dates[i].content[j].org_air, port_id1) == 0) && (strcmp(data->flights.dates[i].content[j].dest_air, port_id2) == 0))||
+						 	((strcmp(data->flights.dates[i].content[j].org_air, port_id2) == 0) && (strcmp(data->flights.dates[i].content[j].dest_air, port_id1) == 0))		)
+					)
+			{
+				sum = sum + data->flights.dates[i].content[j].air_time;
+				count++;
+			}
+		}
+	}
+	printf("average: %.1f minutes (%d flights)\n", count!=0 ? sum/count : 0, count);
+}
