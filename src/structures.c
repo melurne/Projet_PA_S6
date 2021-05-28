@@ -99,7 +99,21 @@ void printAirport(Airport airport) {
 }
 
 void printFlight(Flight f) {
-  printf( "%d,%d,%d,%s,%s,%s,%d,%f,%f,%d,%d,%f,%f,%f\n", 
+  if (f.diverted || f.canceled)
+    printf( "%d,%d,%d,%s,%s,%s,%d,,,%d,%d,,%d,%d\n", 
+          f.month,
+          f.day,
+          f.weekday,
+          f.airline,
+          f.org_air,
+          f.dest_air,
+          f.sched_dep,
+          f.dist,
+          f.sched_arr,
+          f.diverted ? 1 : 0,
+          f.canceled ? 1 : 0);
+  else
+    printf( "%d,%d,%d,%s,%s,%s,%d,%f,%f,%d,%d,%f,%d,%d\n", 
           f.month,
           f.day,
           f.weekday,

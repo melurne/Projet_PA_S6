@@ -11,7 +11,7 @@
 void sortAirlines(TableAirlines* airlines) {
   FILE* fp = fopen(AIRLINES_PATH, "r"); 
   Airline token = blankAirline();
-  printf("Airlines start\n");
+  //printf("Airlines start\n");
   int flag = 0;
   
   char* line = NULL;
@@ -24,13 +24,13 @@ void sortAirlines(TableAirlines* airlines) {
     token = blankAirline();
   }
   fclose(fp);
-  printf("Airlines end\n");
+  //printf("Airlines end\n");
 }
 
 void sortAirports(TableAirports* airports) {
   FILE* fp = fopen("data/airports.csv", "r"); 
   Airport token = blankAirport();
-  printf("Airports start\n");
+  //printf("Airports start\n");
   int flag = 0;
   
   char* line = NULL;
@@ -43,13 +43,13 @@ void sortAirports(TableAirports* airports) {
   	token = blankAirport();
   }
   fclose(fp);
-  printf("Airports end\n");
+  //printf("Airports end\n");
 }
 
 void sortFlights(TableFlights* flights) {
   FILE* fp = fopen("data/flights.csv", "r"); 
   Flight token = blankFlight();
-  printf("Flights start\n");
+  //printf("Flights start\n");
   int flag = 0;
   
   char* line = NULL;
@@ -62,5 +62,5 @@ void sortFlights(TableFlights* flights) {
 		token = blankFlight();
   }
   fclose(fp);
-  printf("Airports end\n");
+  //printf("Airports end\n");
 }

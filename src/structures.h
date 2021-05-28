@@ -3,6 +3,7 @@
 #define MAX_LEN 200
 #define DAYS_IN_HASHED_YEAR (12-1)*31 + 31 // = 372 or just 6 more than a leap year
 #define MAX_BUFFER_LEN 300
+#define TMP_BUFFER_SIZE 20
 
 #define SEPARATOR ','
 

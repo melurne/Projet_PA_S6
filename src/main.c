@@ -28,7 +28,17 @@ int main() {
   }
   sortFlights(&(data.flights));
 
+  printf("testsuite: \n");
+
+  printf("show_airports HA\n");
   show_airports(&data, "HA");
+
+  printf("\nshow_airlines DFW\n");
+  show_airlines(&data, "DFW");
+
+  printf("\nshow_flights ATL 2-26\n");
+  show_flights(&data, "ATL", 2, 26, "");
+
   return 0;
 }
 
