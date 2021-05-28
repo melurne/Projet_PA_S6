@@ -10,12 +10,7 @@
 #include "requests.h"
 
 void show_airports(Tables* data, char* airline_id) {
-	BufferList seen;
-	for (int i = 0; i<MAX_BUFFER_LEN; i++)
-	{
-		seen.content[i] = malloc(sizeof(char)*LEN_IATA_AIRPORT);
-	}
-	seen.last = -1;
+	BufferList seen = initBuffer();
 	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
 	{
 		for (int j = 0; j <= data->flights.dates[i].last; j++)
@@ -39,19 +34,11 @@ void show_airports(Tables* data, char* airline_id) {
 	{
 		printAirport(accessAirport(data->airports, seen.content[i]));
 	}
-	for (int i = 0; i<MAX_BUFFER_LEN; i++)
-	{
-		free(seen.content[i]);
-	}
+	freeBuffer(seen);
 } 
 
 void show_airlines(Tables* data, char* airport_id) {
-	BufferList seen;
-	for (int i = 0; i<MAX_BUFFER_LEN; i++)
-	{
-		seen.content[i] = malloc(sizeof(char)*LEN_IATA_AIRLINE);
-	}
-	seen.last = -1;
+	BufferList seen = initBuffer();
 	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
 	{
 		for (int j = 0; j <= data->flights.dates[i].last; j++)
@@ -60,8 +47,7 @@ void show_airlines(Tables* data, char* airport_id) {
 			{
 				if (notIn(seen, data->flights.dates[i].content[j].airline))
 				{
-					strcpy(seen.content[seen.last+1], data->flights.dates[i].content[j].airline);
-					seen.last ++;
+					insertBuffer(&seen, data->flights.dates[i].content[j].airline);
 				}
 			}
 		}
@@ -70,10 +56,7 @@ void show_airlines(Tables* data, char* airport_id) {
 	{
 		printAirline(accessAirline(data->airlines, seen.content[i]));
 	}
-	for (int i = 0; i<MAX_BUFFER_LEN; i++)
-	{
-		free(seen.content[i]);
-	}
+	freeBuffer(seen);
 }
 
 void show_flights(Tables* data, char* port_id, int month, int day, char* optionnal_args) {
@@ -118,5 +101,30 @@ void show_flights(Tables* data, char* port_id, int month, int day, char* optionn
 			count++;
 			printFlight(timeScale.content[i]);
 		}
+	}
+}
+
+void most_delayed_flights(Tables* data) {
+	Flight most_delayed[5];
+	int index_smallest = 0;
+	float min_delay = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		most_delayed[i] = blankFlight();
+	}
+	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	{
+		for (int j = 0; j <= data->flights.dates[i].last; j++)
+		{
+			if (data->flights.dates[i].content[j].arr_delay > min_delay)
+			{
+				most_delayed[index_smallest] = data->flights.dates[i].content[j];
+				index_min_arr_delay(most_delayed, &index_smallest, &min_delay);
+			}
+		}
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		printFlight(most_delayed[i]);
 	}
 }

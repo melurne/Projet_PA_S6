@@ -133,3 +133,8 @@ Airport accessAirport(TableAirports, const char*);
 FlightsOnDay listFlightsByDate(TableFlights, int, int);
 
 bool notIn(BufferList, char*);
+BufferList initBuffer();
+void freeBuffer(BufferList);
+void insertBuffer(BufferList*, char*);
+
+void index_min_arr_delay(Flight[5], int*, float*);

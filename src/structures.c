@@ -183,3 +183,38 @@ bool notIn(BufferList list, char* token) {
   }
   return true;
 }
+
+BufferList initBuffer() {
+  BufferList list;
+  for (int i = 0; i<MAX_BUFFER_LEN; i++)
+  {
+    list.content[i] = malloc(sizeof(char)*LEN_IATA_AIRLINE);
+  }
+  list.last = -1;
+  return list;
+}
+
+void freeBuffer(BufferList list) {
+  for (int i = 0; i<MAX_BUFFER_LEN; i++)
+  {
+    free(list.content[i]);
+  }
+}
+
+void insertBuffer(BufferList* list, char* token) {
+  strcpy(list->content[list->last+1], token);
+  list->last ++;
+}
+
+void index_min_arr_delay(Flight list[5], int* id_min, float* min) {
+  *min = list[0].arr_delay;
+  *id_min = 0;
+  for (int i = 1; i < 5; i++)
+  {
+    if (list[i].arr_delay < *min)
+    {
+      *min = list[i].arr_delay;
+      *id_min = i;
+    }
+  }
+}

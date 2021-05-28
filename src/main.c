@@ -39,6 +39,9 @@ int main() {
   printf("\nshow_flights ATL 2-26\n");
   show_flights(&data, "ATL", 2, 26, "");
 
+  printf("\nmost_delayed_flights\n");
+  most_delayed_flights(&data);
+
   return 0;
 }
 
