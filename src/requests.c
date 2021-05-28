@@ -183,3 +183,90 @@ void most_delayed_airlines(Tables* data) {
 		free(averages.content[i].IATA_code);
 	}
 }
+
+void delayed_airline(Tables* data, char* airline_id) {
+	float sum = 0;
+	int count = 0;
+	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	{
+		for (int j = 0; j <= data->flights.dates[i].last; j++)
+		{
+			if (	!(data->flights.dates[i].content[j].diverted || data->flights.dates[i].content[j].canceled) &&
+						strcmp(data->flights.dates[i].content[j].airline, airline_id))
+			{
+				sum = sum + data->flights.dates[i].content[j].arr_delay;
+				count++;
+			}
+		}
+	}
+	Airline airline = accessAirline(data->airlines, airline_id);
+	printf("%s,%s,%f\n", airline.IATA_code, airline.name, count!=0 ? sum/count : 0);
+}
+
+void most_delayed_airlines_at_airport(Tables* data, char* port_id) {
+	statAirlines averages;
+	averages.hash = &get_index_airlines;
+	for (int i = 0; i<MAX_LEN_AIRLINES; i++)
+	{
+		averages.content[i].sum = 0;
+		averages.content[i].count = 0;
+		averages.content[i].IATA_code = malloc(sizeof(char)*MAX_LEN_AIRLINES);
+	}
+
+	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	{
+		for (int j = 0; j <= data->flights.dates[i].last; j++)
+		{
+			if (	strcmp(data->flights.dates[i].content[j].dest_air, port_id) && 
+						!(data->flights.dates[i].content[j].diverted || data->flights.dates[i].content[j].canceled))
+			{
+				strcpy(averages.content[averages.hash(data->flights.dates[i].content[j].airline)].IATA_code, data->flights.dates[i].content[j].airline);
+				averages.content[averages.hash(data->flights.dates[i].content[j].airline)].sum = 	averages.content[averages.hash(data->flights.dates[i].content[j].airline)].sum
+																																													+ data->flights.dates[i].content[j].arr_delay; 
+				averages.content[averages.hash(data->flights.dates[i].content[j].airline)].count++;
+			}
+		}
+	}
+
+	for (int i = 0; i<MAX_LEN_AIRLINES; i++)
+	{
+		if (averages.content[i].count != 0)
+			averages.content[i].sum = averages.content[i].sum / averages.content[i].count;
+	}
+
+	float max = 0;
+	int id_max = 0;
+	for (int j = 0; j<3; j++)
+	{
+		max = averages.content[0].sum;
+		id_max = 0;
+		for (int i = 0; i<MAX_LEN_AIRLINES; i++)
+		{
+			if (averages.content[i].count != 0 && averages.content[i].sum > max)
+			{
+				max = averages.content[i].sum;
+				id_max = i;
+			}
+		}
+		// We have the current maximum average
+		Airline airline = accessAirline(data->airlines, averages.content[id_max].IATA_code);
+		printf("%s,%s,%f\n", airline.IATA_code, airline.name, averages.content[id_max].sum);
+		// We put the maximum average to 0 in order to ignore it on te next pass
+		averages.content[id_max].sum = 0;
+	}
+	for (int i = 0; i<MAX_LEN_AIRLINES; i++)
+	{
+		free(averages.content[i].IATA_code);
+	}
+}
+
+void changed_flights(Tables* data, int month, int day) {
+	FlightsOnDay timeScale = data->flights.dates[data->flights.hash(month, day)];
+	for (int i = 0; i < timeScale.last; i++)
+	{
+		if (timeScale.content[i].diverted || timeScale.content[i].canceled)		
+		{
+			printFlight(timeScale.content[i]);
+		}
+	}
+}

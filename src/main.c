@@ -45,6 +45,17 @@ int main() {
   printf("\nmost_delayed_airlines\n");
   most_delayed_airlines(&data);
 
+  printf("\ndelayed_airline AA\n");
+  delayed_airline(&data, "AA");
+
+  printf("\nmost_delayed_airlines_at_airport LAX\n");
+  most_delayed_airlines_at_airport(&data, "LAX");
+
+  printf("\nchanged_flights 12-29\n");
+  changed_flights(&data, 12, 29);
+
+
+
   return 0;
 }
 
