@@ -21,7 +21,9 @@ int main() {
   sortAirports(&airports);
   //printAirport(accessAirport(airports, "YUM"));
 
-  sortFlights();
+  TableFlights flights;
+  flights.hash = &hashDays;
+  sortFlights(&flights);
   return 0;
 }
 

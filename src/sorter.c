@@ -46,7 +46,7 @@ void sortAirports(TableAirports* airports) {
   printf("Airports end\n");
 }
 
-void sortFlights(TreeFlights* flights) {
+void sortFlights(TableFlights* flights) {
   FILE* fp = fopen("data/flights.csv", "r"); 
   Flight token = blankFlight();
   printf("Flights start\n");

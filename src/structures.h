@@ -1,6 +1,7 @@
 #include <stdbool.h>
 
-#define MAX_LEN 100
+#define MAX_LEN 200
+#define DAYS_IN_HASHED_YEAR (12-1)*31 + 31 // = 372 or just 6 more than a leap year
 
 #define SEPARATOR ','
 
@@ -33,51 +34,55 @@
 #define AIRPORTS_COUNTRY_BUFFER_LENGTH 5
 
 typedef struct Airline {
-    char* IATA_code;
-    char* name;
+  char* IATA_code;
+  char* name;
 } Airline;
 
 typedef struct Airport {
-    char* IATA_code;
-    char* name;
+  char* IATA_code;
+  char* name;
 
-    char* city;
-    char* state;
-    char* country;
+  char* city;
+  char* state;
+  char* country;
 
-    float latitude;
-    float longitude;
+  float latitude;
+  float longitude;
 } Airport;
 
 typedef struct Flight {
-    int month;
-    int day;
-    int weekday;
+  int month;
+  int day;
+  int weekday;
 
-    char* airline;
-    char* org_air;
-    char* dest_air;
+  char* airline;
+  char* org_air;
+  char* dest_air;
 
-    int sched_dep;
-    float dep_delay;
+  int sched_dep;
+  float dep_delay;
 
-    float air_time;
-    int dist;
+  float air_time;
+  int dist;
 
-    int sched_arr;
-    float arr_delay;
+  int sched_arr;
+  float arr_delay;
 
-    bool diverted;
-    bool canceled;
+  bool diverted;
+  bool canceled;
 } Flight;
 
-typedef struct NodeFlights {
-    Flight f;
-    struct NodeFlights* left;
-    struct NodeFlights* right;
-} Node;
+typedef struct FlightsOnDay {
+  //int month;
+  //int day;
+  Flight content[MAX_LEN];
+  int last;
+} FlightsOnDay;
 
-typedef Node* TreeFlights;
+typedef struct TableFlights {
+  FlightsOnDay dates[DAYS_IN_HASHED_YEAR];
+  int (*hash)(const int, const int);
+} TableFlights;
 
 typedef struct HashtableAirlines {
   Airline content[MAX_LEN_AIRLINES];
@@ -91,15 +96,25 @@ typedef struct HashtableAirports {
 
 void clearString(char*); 
 void printIATA(char[], int);
+
 Flight blankFlight();
 Airline blankAirline();
 Airport blankAirport();
+
 void printAirline(Airline);
 void printAirport(Airport);
 void printFlight(Flight);
 
+int hashDays(const int, const int);
+
+int compareFlight(Flight, Flight);
+
+void addFlight(FlightsOnDay*, Flight);
+
 void insertAirline(TableAirlines*, Airline);
 void insertAirport(TableAirports*, Airport);
+void insertFlight(TableFlights*, Flight);
 
 Airline accessAirline(TableAirlines, const char*);
 Airport accessAirport(TableAirports, const char*);
+FlightsOnDay listFlightsByDate(TableFlights, int, int);

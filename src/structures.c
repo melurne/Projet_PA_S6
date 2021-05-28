@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "structures.h"
 
 void clearString(char* str) {
@@ -115,6 +116,25 @@ void printFlight(Flight f) {
           f.canceled ? 1 : 0);
 }
 
+int hashDays(const int month, const int day) {
+  // We subtract 1 to begin the list at index 0
+  return (month-1)*31 + day - 1;
+}
+
+int compareFlight(Flight f1, Flight f2) {
+  if ((f1.month*100 + f1.day) > (f2.month*100 + f2.day))
+    return 1;
+  else if ((f1.month*100 + f1.day) == (f2.month*100 + f2.day))
+    return 0;
+  else 
+    return -1;
+}
+
+void addFlight(FlightsOnDay* ptList, Flight token) {
+  ptList->content[ptList->last+1] = token;
+  ptList->last ++;
+}
+
 void insertAirline(TableAirlines* airlines, Airline token) {
   airlines->content[airlines->hash(token.IATA_code)] = token;
 }
@@ -123,10 +143,18 @@ void insertAirports(TableAirports* airports, Airport token) {
   airports->content[airports->hash(token.IATA_code)] = token;
 }
 
+void insertFlight(TableFlights* flights, Flight token) {
+  addFlight(&(flights->dates[flights->hash(token.month, token.day)]), token);
+}
+
 Airline accessAirline(TableAirlines airlines, const char* key) {
   return airlines.content[airlines.hash(key)];
 }
 
 Airport accessAirport(TableAirports airports, const char* key) {
   return airports.content[airports.hash(key)];
+}
+
+FlightsOnDay listFlightsByDate(TableFlights flights, int month, int day) {
+  return flights.dates[flights.hash(month, day)];
 }
