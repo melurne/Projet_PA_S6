@@ -22,7 +22,11 @@ int main() {
   //printAirport(accessAirport(airports, "YUM"));
 
   TableFlights flights;
-  flights.hash = &hashDays;
+  flights.hash = hashDays;
+  for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+  {
+    flights.dates[i].last = -1;
+  }
   sortFlights(&flights);
   return 0;
 }
