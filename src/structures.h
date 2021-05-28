@@ -107,6 +107,17 @@ typedef struct Tables {
   TableFlights flights;
 } Tables;
 
+typedef struct stats {
+  char* IATA_code;
+  float sum;
+  int count;
+} stats;
+
+typedef struct statAirlines {
+  stats content[MAX_LEN_AIRLINES];
+  int (*hash)(const char*);
+} statAirlines;
+
 void clearString(char*); 
 void printIATA(char[], int);
 

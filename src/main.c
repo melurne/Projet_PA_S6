@@ -42,6 +42,9 @@ int main() {
   printf("\nmost_delayed_flights\n");
   most_delayed_flights(&data);
 
+  printf("\nmost_delayed_airlines\n");
+  most_delayed_airlines(&data);
+
   return 0;
 }
 
