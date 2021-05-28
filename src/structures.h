@@ -2,6 +2,7 @@
 
 #define MAX_LEN 200
 #define DAYS_IN_HASHED_YEAR (12-1)*31 + 31 // = 372 or just 6 more than a leap year
+#define MAX_BUFFER_LEN 300
 
 #define SEPARATOR ','
 
@@ -94,6 +95,17 @@ typedef struct HashtableAirports {
   int (*hash)(const char*);
 } TableAirports;
 
+typedef struct BufferList {
+  char* content[MAX_BUFFER_LEN];
+  int last;
+} BufferList;
+
+typedef struct Tables {
+  TableAirports airports;
+  TableAirlines airlines;
+  TableFlights flights;
+} Tables;
+
 void clearString(char*); 
 void printIATA(char[], int);
 
@@ -118,3 +130,5 @@ void insertFlight(TableFlights*, Flight);
 Airline accessAirline(TableAirlines, const char*);
 Airport accessAirport(TableAirports, const char*);
 FlightsOnDay listFlightsByDate(TableFlights, int, int);
+
+bool notIn(BufferList, char*);

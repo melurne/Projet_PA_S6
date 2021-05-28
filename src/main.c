@@ -7,27 +7,28 @@
 #include "hash.h"
 #include "reader.h"
 #include "sorter.h"
+#include "requests.h"
 
 int main() {
-  TableAirlines airlines;
-  airlines.hash = &get_index_airlines;
-  sortAirlines(&airlines);
+  Tables data;
+  data.airlines.hash = &get_index_airlines;
+  sortAirlines(&(data.airlines));
 
   //Airline token = accessAirline(airlines, "AA");
   //printAirline(token);
 
-  TableAirports airports;
-  airports.hash = &get_index_airports;
-  sortAirports(&airports);
+  data.airports.hash = &get_index_airports;
+  sortAirports(&(data.airports));
   //printAirport(accessAirport(airports, "YUM"));
 
-  TableFlights flights;
-  flights.hash = hashDays;
+  data.flights.hash = hashDays;
   for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
   {
-    flights.dates[i].last = -1;
+    data.flights.dates[i].last = -1;
   }
-  sortFlights(&flights);
+  sortFlights(&(data.flights));
+
+  show_airports(&data, "HA");
   return 0;
 }
 

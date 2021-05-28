@@ -158,3 +158,14 @@ Airport accessAirport(TableAirports airports, const char* key) {
 FlightsOnDay listFlightsByDate(TableFlights flights, int month, int day) {
   return flights.dates[flights.hash(month, day)];
 }
+
+bool notIn(BufferList list, char* token) {
+  for (int i = 0; i <= list.last; i++)
+  {
+    if (strcmp(list.content[i], token) == 0)
+    {
+      return false;
+    }
+  }
+  return true;
+}
