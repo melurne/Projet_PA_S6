@@ -5,7 +5,9 @@
 #define MAX_BUFFER_LEN 300
 #define TMP_BUFFER_SIZE 20
 
-#define SEPARATOR ','
+#define MAX_LENGTH_INPUT 155
+#define MAX_LENGTH_ARGS 120
+#define MAX_LENGTH_FUNCTION 35
 
 #define MASK_FLIGHTS "%d %d %d %s %s %s %d %f %f %d %d %f %d %d"
 #define MASK_FLIGHTS_MISSING "%d %d %d %s %s %s %d   %d %d  %d %d"

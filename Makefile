@@ -1,5 +1,5 @@
-bin/build : lib/main.o lib/hashairlines.o lib/hashairports.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o
-	gcc lib/main.o lib/hashairports.o lib/hashairlines.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o -o bin/build
+bin/build : lib/main.o lib/hashairlines.o lib/hashairports.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o
+	gcc lib/main.o lib/hashairports.o lib/hashairlines.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o -o bin/build
 
 lib/hashairlines.o : hashFunc/hashairlines.c
 	gcc -c -g -w -Wall -Wextra hashFunc/hashairlines.c -o lib/hashairlines.o
@@ -18,6 +18,9 @@ lib/sorter.o : src/sorter.c
 
 lib/requests.o : src/requests.c
 	gcc -c -g -w -Wall -Wextra src/requests.c -o lib/requests.o
+
+lib/ui.o : src/ui.c
+	gcc -c -g -w -Wall -Wextra src/ui.c -o lib/ui.o
 
 lib/main.o : src/main.c
 	gcc -c -g -w -Wall -Wextra src/main.c -o lib/main.o

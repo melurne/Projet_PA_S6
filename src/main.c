@@ -8,6 +8,7 @@
 #include "reader.h"
 #include "sorter.h"
 #include "requests.h"
+#include "ui.h"
 
 int main() {
   Tables data;
@@ -28,7 +29,7 @@ int main() {
   }
   sortFlights(&(data.flights));
 
-  printf("testsuite: \n");
+  printf("testsuite: \n\n");
 
   printf("show_airports HA\n");
   show_airports(&data, "HA");
@@ -56,6 +57,8 @@ int main() {
 
   printf("\navg_flight_duration LAX SFO\n");
   avg_flight_duration(&data, "LAX", "SFO");
+
+  printf("%d\n", functionHash("quit"));
 
   return 0;
 }
