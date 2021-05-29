@@ -13,5 +13,9 @@
 #define HASH_find_multicity_itinerary 2486
 #define HASH_quit 451
 
-int getcommand(Tables*);
 int functionHash(const char*);
+void extract_date(char*, int*, int*);
+int getcommand(Tables*);
+int exec_show_flights(Tables*, char*);
+int exec_changed_flights(Tables*, char*);
+int exec_avg_flight_duration(Tables*, char*);

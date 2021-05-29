@@ -58,7 +58,30 @@ int main() {
   printf("\navg_flight_duration LAX SFO\n");
   avg_flight_duration(&data, "LAX", "SFO");
 
-  printf("%d\n", functionHash("quit"));
+  //printf("%d\n", functionHash("quit"));
+  int keep_going = 0;
+  int result = 0;
+  while (keep_going == 0)
+  {
+    switch (getcommand(&data))
+    {
+      case 0:
+        continue;
+      case 1:
+        printf("closing ...\n");
+        keep_going = 1;
+      case -2:
+        printf("Unknown command\n");
+        continue;
+      case -1:
+        printf("Arguments could not be parsed\n");
+        continue;
+      default:
+        continue;
+    }
+  }
+
+  freeTables(&data);
 
   return 0;
 }
