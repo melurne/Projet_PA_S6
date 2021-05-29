@@ -3,7 +3,7 @@ show-airlines LAX
 show-flights ATL 2-26
 show-flights SLC 4-7 1600 limit=5
 avg-flight-duration LAX JFK
-find-itinerary PHX SAN 12-15
+find-itinerary LAX LAS 4-12
 most-delayed-flights
 most-delayed-airlines
 changed-flights 5-15

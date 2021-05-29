@@ -27,6 +27,15 @@ Node blankNode() {
 	return n;
 }
 
+int addFormatedTime(int time, int delay) {
+	time = time + delay;
+	if (time%100 > 60)
+	{
+		time = time - (time%100) + 100 + (time%100)%60;
+	}
+	return time;
+}
+
 void show_airports(Tables* data, char* airline_id) {
 	BufferList seen = initBuffer();
 	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
@@ -309,7 +318,7 @@ void avg_flight_duration(Tables* data, char* port_id1, char* port_id2) {
 	printf("average: %.1f minutes (%d flights)\n", count!=0 ? sum/count : 0, count);
 }
 
-void find_itinerary(Tables* data, char* org_id, char*dest_id, int month, int day, char* optionnal_args) {
+void find_itinerary(Tables* data, char* org_id, char* dest_id, int month, int day, char* optionnal_args) {
 	int time = 0;
 	int cap = MAX_LEN;
 	if (optionnal_args != "")
@@ -342,26 +351,83 @@ void find_itinerary(Tables* data, char* org_id, char*dest_id, int month, int day
 	}
 
 	int count=0;
+	FlightsOnDay possibleFlights = data->flights.dates[data->flights.hash(month, day)];
 
 	// Let's first find the direct flights
 	printf("Itineraires sans escales:\n");
-	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	for (int i = 0; i<=possibleFlights.last; i++)
 	{
-		for (int j = 0; j<=data->flights.dates[i].last; j++)
+		if (	!possibleFlights.content[i].canceled &&
+					!possibleFlights.content[i].diverted &&
+					(strcmp(possibleFlights.content[i].org_air, org_id) == 0) &&
+					(strcmp(possibleFlights.content[i].dest_air, dest_id) == 0) &&
+					possibleFlights.content[i].sched_dep > time &&
+					possibleFlights.content[i].sched_arr > possibleFlights.content[i].sched_dep && 
+					count < cap
+				)
 		{
-			if ((	!data->flights.dates[i].content[j].canceled &&
-						!data->flights.dates[i].content[j].diverted &&
-						data->flights.dates[i].content[j].month == month && data->flights.dates[i].content[j].day == day) &&
-						(strcmp(data->flights.dates[i].content[j].org_air, org_id) == 0) &&
-						(strcmp(data->flights.dates[i].content[j].dest_air, dest_id) == 0) &&
-						data->flights.dates[i].content[j].sched_dep > time &&
-						count < cap
-					)
-			{
-				printFlight(data->flights.dates[i].content[j]);	
-			}
+			printFlight(possibleFlights.content[i]);
+			printf("\n");
 		}
 	}
 
+	// Then we can look for flights with 1 stop
+	printf("Itineraires avec 1 escale:\n");
+	for (int i = 0; i<=possibleFlights.last; i++)
+	{
+		if (	!possibleFlights.content[i].canceled &&
+					!possibleFlights.content[i].diverted &&
+					(strcmp(possibleFlights.content[i].org_air, org_id) == 0) &&
+					possibleFlights.content[i].sched_dep > time &&
+					count < cap
+				)
+		{
+			//printFlight(possibleFlights.content[i]);	
+			for (int j = 0; j<possibleFlights.last; j++)
+			{
+				if (	!possibleFlights.content[j].canceled &&
+							!possibleFlights.content[j].diverted &&
+							(strcmp(possibleFlights.content[j].org_air, possibleFlights.content[i].dest_air) == 0) &&
+							(strcmp(possibleFlights.content[j].dest_air, dest_id) == 0) &&
+							possibleFlights.content[j].sched_dep > addFormatedTime(possibleFlights.content[i].sched_arr, BOARDING_DELAY) &&
+							count < cap
+						)
+				{
+					printFlight(possibleFlights.content[i]);
+					printFlight(possibleFlights.content[j]);
+					printf("\n");
+				}
+			}
+		}
+	}
+}
 
+void find_multicity_itinerary(Tables* data, char* origin, QueueChars portsList, QueueDates datesList, QueueInts timesList) {
+	if (portsList.first == NULL)
+	{
+		return;
+	}
+	char* args;
+	args[0] = 0;
+	if (timesList.first->val != 0)
+	{
+		sprintf(args, "%d", timesList.first->val);
+	}	
+	printf("%s -> %s\n", origin, portsList.first->val);
+	find_itinerary(data, origin, portsList.first->val, datesList.first->month, datesList.first->day, args);
+	strcpy(origin, portsList.first->next->val);
+	
+	LinkedChars* port_to_free = portsList.first;
+	portsList.first = portsList.first->next;
+	
+	LinkedDates* date_to_free = datesList.first;
+	datesList.first = datesList.first->next;
+
+	LinkedInts* time_to_free = timesList.first;
+	timesList.first = timesList.first->next;
+
+	find_multicity_itinerary(data, portsList.first->val, portsList, datesList, timesList);
+	free(port_to_free);
+	free(date_to_free);
+	free(time_to_free);
 }

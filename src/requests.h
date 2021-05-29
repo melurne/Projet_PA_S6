@@ -1,4 +1,5 @@
 #define MAX_LINKS 20
+#define BOARDING_DELAY 30
 
 typedef struct Link {
 	char* destination;
@@ -23,3 +24,5 @@ void delayed_airline(Tables*, char*);
 void most_delayed_airlines_at_airport(Tables*, char*);
 void changed_flights(Tables*, int, int);
 void avg_flight_duration(Tables*, char*, char*);
+void find_itinerary(Tables*, char*, char*, int, int, char*);
+void find_multicity_itinerary(Tables*, char*, QueueChars, QueueDates, QueueInts);

@@ -120,6 +120,37 @@ typedef struct statAirlines {
   int (*hash)(const char*);
 } statAirlines;
 
+typedef struct LinkedChars {
+  char* val;
+  struct LinkedChars* next;
+} LinkedChars;
+
+typedef struct LinkedDates {
+  int month;
+  int day;
+  struct LinkedDates* next;
+} LinkedDates;
+
+typedef struct LinkedInts {
+  int val;
+  struct LinkedInts* next;
+} LinkedInts;
+
+typedef struct QueueChars {
+  LinkedChars* first;
+  LinkedChars* last;
+} QueueChars;
+
+typedef struct QueueDates {
+  LinkedDates* first;
+  LinkedDates* last;
+} QueueDates;
+
+typedef struct QueueInts {
+  LinkedInts* first;
+  LinkedInts* last;
+} QueueInts;
+
 void clearString(char*); 
 void printIATA(char[], int);
 
