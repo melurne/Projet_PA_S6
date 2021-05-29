@@ -64,12 +64,12 @@ void show_flights(Tables* data, char* port_id, int month, int day, char* optionn
 	int cap = MAX_LEN;
 	if (optionnal_args != "")
 	{
-		char* curr = strchr(optionnal_args, " ");
+		char* curr = strchr(optionnal_args, ' ');
 		// A single optionnal argument has been passed
 		if (curr == NULL)
 		{
 			// A time has benn passed
-			if ((curr = strchr(optionnal_args, "=")) == NULL)
+			if ((curr = strchr(optionnal_args, '=')) == NULL)
 			{
 				time = atoi(optionnal_args);
 			}
@@ -83,9 +83,9 @@ void show_flights(Tables* data, char* port_id, int month, int day, char* optionn
 		else
 		{
 			char* tmp = malloc(sizeof(char)*TMP_BUFFER_SIZE);
-			strncpy(tmp, optionnal_args, optionnal_args-curr);
+			strncpy(tmp, optionnal_args, curr-optionnal_args);
 			time = atoi(tmp);
-			curr = strchr(optionnal_args, "=");
+			curr = strchr(optionnal_args, '=');
 			cap = atoi(curr+1);
 			free(tmp);
 		}

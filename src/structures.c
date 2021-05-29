@@ -83,6 +83,25 @@ Airport blankAirport() {
   return airport;
 }
 
+void freeFlight(Flight f) {
+  free(f.airline);
+  free(f.org_air);
+  free(f.dest_air);
+}
+
+void freeAirline(Airline airline) {
+  free(airline.IATA_code);
+  free(airline.name);
+}
+
+void freeAirport(Airport airport) {
+  free(airport.IATA_code);
+  free(airport.name);
+  free(airport.city);
+  free(airport.state);
+  free(airport.country);
+}
+
 void printAirline(Airline airline) {
   printf("%s,%s\n", airline.IATA_code, airline.name);
 }
@@ -217,4 +236,34 @@ void index_min_arr_delay(Flight list[5], int* id_min, float* min) {
       *id_min = i;
     }
   }
+}
+
+void freeTableFlights(TableFlights* flights) {
+  for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+  {
+    for (int j = 0; j<=flights->dates[i].last; j++)
+    {
+      freeFlight(flights->dates[i].content[j]);
+    }
+  }
+}
+
+void freeTableAirlines(TableAirlines* airlines) {
+  for (int i = 0; i<MAX_LEN_AIRLINES; i++)
+  {
+    freeAirline(airlines->content[i]);
+  }
+}
+
+void freeTableAirports(TableAirports* airports) {
+  for (int i = 0; i<MAX_LEN_AIRPORTS; i++)
+  {
+    freeAirport(airports->content[i]);
+  }
+}
+
+void freeTables(Tables* data) {
+  freeTableFlights(&(data->flights));
+  freeTableAirlines(&(data->airlines));
+  freeTableAirports(&(data->airports));
 }

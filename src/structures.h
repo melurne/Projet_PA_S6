@@ -21,7 +21,7 @@
 #define NARGS_AIRLINES 2
 #define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
-#define MAX_LEN_AIRLINES 20 
+#define MAX_LEN_AIRLINES 15
 #define AIRLINES_PATH "data/airlines.csv"
 #define AIRLINES_NAME_BUFFER_LENGTH 30
 
@@ -30,7 +30,7 @@
 #define NARGS_AIRPORTS_MIN 5
 #define LEN_IATA_AIRPORT 3
 #define MAX_LINE_LENGTH_AIRPORTS 140
-#define MAX_LEN_AIRPORTS 350  
+#define MAX_LEN_AIRPORTS 323
 #define AIRPORTS_PATH "data/airports.csv"
 #define AIRPORTS_NAME_BUFFER_LENGTH 75
 #define AIRPORTS_CITY_BUFFER_LENGTH 20
@@ -127,6 +127,10 @@ Flight blankFlight();
 Airline blankAirline();
 Airport blankAirport();
 
+void freeFlight(Flight);
+void freeAirline(Airline);
+void freeAirport(Airport);
+
 void printAirline(Airline);
 void printAirport(Airport);
 void printFlight(Flight);
@@ -151,3 +155,8 @@ void freeBuffer(BufferList);
 void insertBuffer(BufferList*, char*);
 
 void index_min_arr_delay(Flight[5], int*, float*);
+
+void freeTableFlights(TableFlights*);
+void freeTableAirlines(TableAirlines*);
+void freeTableAirports(TableAirports*);
+void freeTables(Tables*);

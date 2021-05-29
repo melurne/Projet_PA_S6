@@ -29,6 +29,7 @@ int main() {
   }
   sortFlights(&(data.flights));
 
+  /*
   printf("testsuite: \n\n");
 
   printf("show_airports HA\n");
@@ -56,32 +57,32 @@ int main() {
   changed_flights(&data, 12, 29);
 
   printf("\navg_flight_duration LAX SFO\n");
-  avg_flight_duration(&data, "LAX", "SFO");
+  avg_flight_duration(&data, "LAX", "SFO");*/
 
   //printf("%d\n", functionHash("quit"));
   int keep_going = 0;
   int result = 0;
   while (keep_going == 0)
   {
-    switch (getcommand(&data))
+    switch ((result = getcommand(&data)))
     {
       case 0:
-        continue;
+        break;
       case 1:
         printf("closing ...\n");
         keep_going = 1;
       case -2:
         printf("Unknown command\n");
-        continue;
+        break;
       case -1:
         printf("Arguments could not be parsed\n");
-        continue;
+        break;
       default:
-        continue;
+        break;
     }
   }
 
-  freeTables(&data);
+  //freeTables(&data);
 
   return 0;
 }
