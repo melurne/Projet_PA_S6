@@ -132,7 +132,7 @@ void printFlight(Flight f) {
           f.diverted ? 1 : 0,
           f.canceled ? 1 : 0);
   else
-    printf( "%d,%d,%d,%s,%s,%s,%d,%f,%f,%d,%d,%f,%d,%d\n", 
+    printf( "%d,%d,%d,%s,%s,%s,%d,%.1f,%.1f,%d,%d,%.1f,%d,%d\n", 
           f.month,
           f.day,
           f.weekday,

@@ -9,8 +9,9 @@ void formatStr(char* string) {
   /*
     Replaces the \n character with \0 to properly end the string
   */
-  char* current_pos = strchr(string,'\n');
-  *current_pos = 0;
+  char* current_pos;
+  if ((current_pos = strchr(string,'\n')) != NULL)
+    *current_pos = 0;
 }
 
 int retrieveNextLine(FILE* fp, char** line, size_t max_lenght_line) {

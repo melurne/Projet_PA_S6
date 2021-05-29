@@ -9,6 +9,24 @@
 #include "sorter.h"
 #include "requests.h"
 
+Link blankLink() {
+	Link l;
+	l.destination = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	l.arr_time = 0;
+	return l;
+}
+
+Node blankNode() {
+	Node n;
+	n.origin = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	for (int i = 0; i<MAX_LINKS; i++)
+	{
+		n.routes[i] = blankLink();
+	}
+	n.last = -1;
+	return n;
+}
+
 void show_airports(Tables* data, char* airline_id) {
 	BufferList seen = initBuffer();
 	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
@@ -289,4 +307,61 @@ void avg_flight_duration(Tables* data, char* port_id1, char* port_id2) {
 		}
 	}
 	printf("average: %.1f minutes (%d flights)\n", count!=0 ? sum/count : 0, count);
+}
+
+void find_itinerary(Tables* data, char* org_id, char*dest_id, int month, int day, char* optionnal_args) {
+	int time = 0;
+	int cap = MAX_LEN;
+	if (optionnal_args != "")
+	{
+		char* curr = strchr(optionnal_args, ' ');
+		// A single optionnal argument has been passed
+		if (curr == NULL)
+		{
+			// A time has benn passed
+			if ((curr = strchr(optionnal_args, '=')) == NULL)
+			{
+				time = atoi(optionnal_args);
+			}
+			// A limit has been passed
+			else
+			{
+				cap = atoi(curr+1);
+			}
+		}
+		// Both arguments have been passed
+		else
+		{
+			char* tmp = malloc(sizeof(char)*TMP_BUFFER_SIZE);
+			strncpy(tmp, optionnal_args, curr-optionnal_args);
+			time = atoi(tmp);
+			curr = strchr(optionnal_args, '=');
+			cap = atoi(curr+1);
+			free(tmp);
+		}
+	}
+
+	int count=0;
+
+	// Let's first find the direct flights
+	printf("Itineraires sans escales:\n");
+	for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
+	{
+		for (int j = 0; j<=data->flights.dates[i].last; j++)
+		{
+			if ((	!data->flights.dates[i].content[j].canceled &&
+						!data->flights.dates[i].content[j].diverted &&
+						data->flights.dates[i].content[j].month == month && data->flights.dates[i].content[j].day == day) &&
+						(strcmp(data->flights.dates[i].content[j].org_air, org_id) == 0) &&
+						(strcmp(data->flights.dates[i].content[j].dest_air, dest_id) == 0) &&
+						data->flights.dates[i].content[j].sched_dep > time &&
+						count < cap
+					)
+			{
+				printFlight(data->flights.dates[i].content[j]);	
+			}
+		}
+	}
+
+
 }

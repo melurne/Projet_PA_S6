@@ -19,3 +19,4 @@ int getcommand(Tables*);
 int exec_show_flights(Tables*, char*);
 int exec_changed_flights(Tables*, char*);
 int exec_avg_flight_duration(Tables*, char*);
+int exec_find_itinerary(Tables*, char*);

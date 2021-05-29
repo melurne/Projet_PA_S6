@@ -93,6 +93,52 @@ int exec_avg_flight_duration(Tables* data, char* args) {
 	return 0;
 }
 
+int exec_find_itinerary(Tables* data, char* args) {
+	int month, day;
+
+	char* curr = args;
+	char* next;
+	if ((next = strchr(curr, ' ')) == NULL)
+	{
+		return -1;
+	}
+	char* date = malloc(sizeof(char)*6);
+	char* org_id = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	char* dest_id = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	strncpy(org_id, curr, next-curr);
+	org_id[next-curr] = 0;
+	curr = next+1;
+
+	if ((next = strchr(curr, ' ')) == NULL)
+	{
+		return -1;
+	}
+	strncpy(dest_id, curr, next-curr);
+	dest_id[next-curr] = 0;
+	curr = next+1;
+	// Only port_id and date were passed
+	if ((next = strchr(curr, ' ')) == NULL)
+	{
+		strcpy(date, curr);
+		extract_date(date, &month, &day);
+		find_itinerary(data, org_id, dest_id, month, day, "");
+		free(date);
+		free(org_id);
+		free(dest_id);
+		return 0;
+	}
+	strncpy(date, curr, next-curr);
+	date[next-curr] = 0;
+	curr = next+1;
+	extract_date(date, &month, &day);
+	find_itinerary(data, org_id, dest_id, month, day, curr);
+
+	free(date);
+	free(org_id);
+	free(dest_id);
+	return 0;
+}
+
 int getcommand(Tables* data) {
 	char* input = malloc(sizeof(char)*MAX_LENGTH_INPUT);
 
@@ -174,6 +220,11 @@ int getcommand(Tables* data) {
 		case HASH_avg_flight_duration:
 			// avg_flight_duration takes two arguments which need to be parsed
 			result = exec_avg_flight_duration(data, args);
+			break;
+
+		case HASH_find_itinerary:
+			// We have the same case as with show_flights
+			result = exec_find_itinerary(data, args);
 			break;
 
 		case HASH_quit:

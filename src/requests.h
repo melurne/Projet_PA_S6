@@ -1,3 +1,19 @@
+#define MAX_LINKS 20
+
+typedef struct Link {
+	char* destination;
+	int arr_time;
+} Link;
+
+typedef struct Node {
+	char* origin;
+	Link routes[MAX_LINKS];
+	int last;
+} Node;
+
+Node blankNode();
+Link blankLink();
+
 void show_airports(Tables*, char*);
 void show_airlines(Tables*, char*);
 void show_flights(Tables*, char*, int, int, char*);
