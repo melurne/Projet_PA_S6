@@ -1,5 +1,6 @@
 // Hashes for the different functions were calculated manualy in advance
-// We ca see that they are all indeed different, thus we should be able to use them effectively
+// We ca see that they are all indeed different, thus we should be able to use
+// them effectively
 #define HASH_show_airports 1378
 #define HASH_show_airlines 1349
 #define HASH_show_flights 1247

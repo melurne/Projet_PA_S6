@@ -1,7 +1,8 @@
 #include <stdbool.h>
 
 #define MAX_LEN 200
-#define DAYS_IN_HASHED_YEAR (12-1)*31 + 31 // = 372 or just 6 more than a leap year
+#define DAYS_IN_HASHED_YEAR \
+  (12 - 1) * 31 + 31  // = 372 or just 6 more than a leap year
 #define MAX_BUFFER_LEN 300
 #define TMP_BUFFER_SIZE 20
 
@@ -77,8 +78,8 @@ typedef struct Flight {
 } Flight;
 
 typedef struct FlightsOnDay {
-  //int month;
-  //int day;
+  // int month;
+  // int day;
   Flight content[MAX_LEN];
   int last;
 } FlightsOnDay;
@@ -151,7 +152,7 @@ typedef struct QueueInts {
   LinkedInts* last;
 } QueueInts;
 
-void clearString(char*); 
+void clearString(char*);
 void printIATA(char[], int);
 
 Flight blankFlight();

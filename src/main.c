@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "structures.h"
 #include "hash.h"
 #include "reader.h"
-#include "sorter.h"
 #include "requests.h"
+#include "sorter.h"
+#include "structures.h"
 #include "ui.h"
 
 int main() {
@@ -15,16 +15,15 @@ int main() {
   data.airlines.hash = &get_index_airlines;
   sortAirlines(&(data.airlines));
 
-  //Airline token = accessAirline(airlines, "AA");
-  //printAirline(token);
+  // Airline token = accessAirline(airlines, "AA");
+  // printAirline(token);
 
   data.airports.hash = &get_index_airports;
   sortAirports(&(data.airports));
-  //printAirport(accessAirport(airports, "YUM"));
+  // printAirport(accessAirport(airports, "YUM"));
 
   data.flights.hash = hashDays;
-  for (int i = 0; i<DAYS_IN_HASHED_YEAR; i++)
-  {
+  for (int i = 0; i < DAYS_IN_HASHED_YEAR; i++) {
     data.flights.dates[i].last = -1;
   }
   sortFlights(&(data.flights));
@@ -59,13 +58,11 @@ int main() {
   printf("\navg_flight_duration LAX SFO\n");
   avg_flight_duration(&data, "LAX", "SFO");*/
 
-  //printf("%d\n", functionHash("quit"));
+  // printf("%d\n", functionHash("quit"));
   int keep_going = 0;
   int result = 0;
-  while (keep_going == 0)
-  {
-    switch ((result = getcommand(&data)))
-    {
+  while (keep_going == 0) {
+    switch ((result = getcommand(&data))) {
       case 0:
         break;
       case 1:
@@ -82,8 +79,7 @@ int main() {
     }
   }
 
-  //freeTables(&data);
+  // freeTables(&data);
 
   return 0;
 }
-

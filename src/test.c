@@ -9,7 +9,7 @@
 
 int main() {
   FILE* fp = fopen("data/airports.csv", "r");
-  //char* line = malloc(sizeof(char)*140);
+  // char* line = malloc(sizeof(char)*140);
 
   char* line = NULL;
 
