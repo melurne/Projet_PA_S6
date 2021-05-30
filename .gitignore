@@ -54,4 +54,10 @@ bin/
 lib/
 hashTests/
 
+*.aux
+*.idx
+Report.synctex.gz
+*.toc
+Report.md
+
 vgcore.*

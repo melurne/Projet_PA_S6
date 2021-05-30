@@ -1,0 +1,94 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=C,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+\usepackage[english]{babel}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{index}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\makeindex
+
+\begin{document}
+	\title{Projet de programation avancée\\S6}
+	\author{NEUS Maxence}
+	\maketitle
+	\newpage
+	
+	\tableofcontents
+	\newpage
+	
+	\section{Introduction}
+	Dans le cadre du module de programmation avancée, nous avons eu à plusierus reprises l'occasion de travailler avec la notion de structures de donnée en C.\\
+	Lors de ce projet, nous avons eu à mettre à profit les connaissances acquisent à ce sujet au cours du module pour traiter le plus efficacement possible un enseble de données concernant des vols entre un grand nombre d'aéroports aux Etats-Unis. Il nous est proposé de réaliser un certain nombre de fonctions pour obtenir des informations intéressantes sur les vols présentés.\\
+	La mise en oeuvre de ce projet peut être divisée en trois parties: 
+	\begin{itemize}
+		\item Lecture des données et gestion des structures.
+		\item Algorithmes permettant d'implémenter les différtentes fonctions proposées dans le sujet.
+		\item Mise en place d'une interface en ligne de commande pour acceder aux données.
+	\end{itemize}
+
+	\section{Lecture des données}
+	\subsection{Structures de données}
+	Tout d'abord, nous allons nous pencher sur les choix qui ont été fait concernant le stockage des données.
+	\subsubsection{Aéroports}
+	Pour stocker les informations sur les différents aéroports, l'approche evidente est d'utiliser une structure de type Table de Hashage.\\
+	En effet la présence des $IATA\_code$ ,nous offre un choix simple de clé de hashage car ils sont unique à chaque aéroport.\\
+	Cette approche nous permet d'acceder directement à toutes les informations relatives à un aéroport en aillant simplement son $IATA\_code$.\\
+	Le choix de la fonction de hashage est détaillé avec celui des companies en 2.1.3.\\
+	
+	\subsubsection{Companies}
+	Pour les mêmes raisons que pour les aéroports, la présence de $IATA\_code$ nous invite à utiliser ici une table de hashage pour stocker les données relatives aux companies.
+	Le choix de la fonction de hashage est ici aussi détaillé en 2.1.3.\\
+	
+	\subsubsection{Fonctions de hashage}
+	Se pose alors la question de la fonction de hashage, pour résoudre ce problème, quelques recherches ont menés à la découverte d'un projet appelé \\$"perfect-hash"$ (\href{https://github.com/ilanschnell/perfect-hash}{projet github par ilanschnell}). Cet outil consiste en un script python qui prends un fichier de type csv et génere à partir d'une colone une fonction de hashage "parfaite" (c'est à dire qui est parfaitement bijective). Ce script a été ici utilisé pour générer les fonctions de hashage pour les aéroports et pour les companies.\\
+	
+	Une limite de ce choix de fonction de hashage est que le code ne pourra traiter que les aéroports et companies qui sont mises à disposition ici. Mais les ajout de companies ou la construction de nouveaux aéroports étants aprioris peu fréquent, ce choix semble raisonnable. Un problème majeur de cette aproche reste lors d'une éventuelle extension du système à l'exterieur des USA, il faudrait regénerer de nouvelles fonctions de hashage.
+	
+	\subsubsection{Vols}
+	Un certain nombre de fonctions utilisent la date des vols comme argument, il semble donc utile de rendre l'acces aux vols à un jour précis le plus rapide possible. Pour ce faire, le choix a été fait ici d'utiliser encore une fois une table de hashage dont la clé d'acces est cette fois-ci la date du vol. Avec cette approche, la structure consistera en $n$ listes de vols qui ont eu lieu le même jour. Le nombre de vols par jour etant variable, et le parcours de chaque liste fréquent, nous choisirons ici de représenter ces listes de vols par des listes contigües de vols.\\
+	La structure globale de stockage des vols sera donc une Table de hashage de ces listes contigües où l'indice dans la table correspond à la date à laquelle les vols de la liste ont eu lieu.\\
+	Pour déterminer cet indice, la fonction de hashage suivante :\\
+	\begin{equation}
+		f(m, j) = (1-m)*31 + j -1
+	\end{equation}
+	permets d'obtenir des indices entre 0 pour le $1^{er}$ janvier et 371 pour le 31 decembre. soit 372 valeurs ce qui correspond à seulement 6 jours de plus qu'une année bissextile, La consommation mémoire de cette solution est donc plutôt optimale tant que la longueure maximale des listes contigües reste proche du nombre réel de vols dans la journée.\\
+	
+	\subsection{Lecture}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}
