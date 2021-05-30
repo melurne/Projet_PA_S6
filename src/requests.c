@@ -288,7 +288,7 @@ void avg_flight_duration(Tables* data, char* port_id1, char* port_id2) {
 		for (int j = 0; j <= data->flights.dates[i].last; j++)
 		{
 			if (	!(data->flights.dates[i].content[j].diverted || data->flights.dates[i].content[j].canceled) &&
-						(	((strcmp(data->flights.dates[i].content[j].org_air, port_id1) == 0) && (strcmp(data->flights.dates[i].content[j].dest_air, port_id2) == 0))||
+						(	((strcmp(data->flights.dates[i].content[j].org_air, port_id1) == 0) && (strcmp(data->flights.dates[i].content[j].dest_air, port_id2) == 0)) ||
 						 	((strcmp(data->flights.dates[i].content[j].org_air, port_id2) == 0) && (strcmp(data->flights.dates[i].content[j].dest_air, port_id1) == 0))		)
 					)
 			{
