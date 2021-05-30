@@ -113,9 +113,7 @@ int exec_find_itinerary(Tables* data, char* args) {
 	{
 		return -1;
 	}
-	strncpy(dest_id, curr, next-curr);
-	dest_id[next-curr] = 0;
-	curr = next+1;
+	getNextArg(&curr, &next, &dest_id, ' ');
 	// Only port_id and date were passed
 	if ((next = strchr(curr, ' ')) == NULL)
 	{
@@ -127,15 +125,85 @@ int exec_find_itinerary(Tables* data, char* args) {
 		free(dest_id);
 		return 0;
 	}
-	strncpy(date, curr, next-curr);
-	date[next-curr] = 0;
-	curr = next+1;
+	getNextArg(&curr, &next, &date, ' ');
 	extract_date(date, &month, &day);
 	find_itinerary(data, org_id, dest_id, month, day, curr);
 
 	free(date);
 	free(org_id);
 	free(dest_id);
+	return 0;
+}
+
+int fetchArgs(char** curr, QueueChars* ports, QueueDates* dates, QueueInts* times) {
+	char* next;
+	if ((next = strchr(*curr, ' ')) == NULL) 
+	{
+		return -1;
+	}
+	char* port_id = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	char* date = malloc(sizeof(char)*6);
+	char* time_str = malloc(sizeof(char)*5);
+	int month, day, time;
+	getNextArg(curr, &next, &port_id, ' ');
+	if (next == NULL)
+	{
+		strcpy(date, *curr);
+	}
+	else 
+	{
+		getNextArg(curr, &next, &date, ' ');	
+	}
+	extract_date(date, &month, &day);
+	if (**curr < '0' || **curr > '9')
+	{
+		time = 0;
+	}
+	else
+	{
+		getNextArg(curr, &next, &time_str, ' ');
+		time = atoi(time_str);
+	}
+	Queue_char(ports, port_id);
+	Queue_date(dates, month, day);
+	Queue_int(times, time);
+
+	free(port_id);
+	free(date);
+	free(time_str);
+	fetchArgs(curr, ports, dates, times);
+	return 0;
+
+}
+
+int exec_find_multicity_itinerary(Tables* data, char* args) {
+	char* curr = args;
+	char* next;
+	if ((next = strchr(curr, ' ')) == NULL)
+	{
+		return -1;
+	}
+	char* origin = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+	getNextArg(&curr, &next, &origin, ' ');
+	QueueChars portsList;
+	portsList.first = NULL;
+	portsList.last = NULL;
+
+	QueueDates datesList;
+	datesList.first = NULL;
+	datesList.last = NULL;
+
+	QueueInts timesList;
+	timesList.first = NULL;
+	timesList.last = NULL;
+
+	if (fetchArgs(&curr, &portsList, &datesList, &timesList) == -1)
+	{
+		free(origin);
+		return -1;
+	}
+	find_multicity_itinerary(data, origin, portsList, datesList, timesList);
+	free(origin);
 	return 0;
 }
 
@@ -225,6 +293,10 @@ int getcommand(Tables* data) {
 		case HASH_find_itinerary:
 			// We have the same case as with show_flights
 			result = exec_find_itinerary(data, args);
+			break;
+
+		case HASH_find_multicity_itinerary:
+			result = exec_find_multicity_itinerary(data, args);
 			break;
 
 		case HASH_quit:

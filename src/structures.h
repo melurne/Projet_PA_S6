@@ -191,3 +191,7 @@ void freeTableFlights(TableFlights*);
 void freeTableAirlines(TableAirlines*);
 void freeTableAirports(TableAirports*);
 void freeTables(Tables*);
+
+void Queue_char(QueueChars*, char*);
+void Queue_date(QueueDates*, int, int);
+void Queue_int(QueueInts*, int);

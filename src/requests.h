@@ -1,19 +1,4 @@
-#define MAX_LINKS 20
 #define BOARDING_DELAY 30
-
-typedef struct Link {
-	char* destination;
-	int arr_time;
-} Link;
-
-typedef struct Node {
-	char* origin;
-	Link routes[MAX_LINKS];
-	int last;
-} Node;
-
-Node blankNode();
-Link blankLink();
 
 void show_airports(Tables*, char*);
 void show_airlines(Tables*, char*);

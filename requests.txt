@@ -8,5 +8,5 @@ most-delayed-flights
 most-delayed-airlines
 changed-flights 5-15
 find-itinerary DEN MCI 2-15 1030 limit=4
-find-multicity-itinerary SAN JFK 6-15 1030 IAD 6-19 1215 SLC 6-21 SAN 6-25
+find-multicity-itinerary LAX LAS 4-12 1030 DFW 4-14 1215 DRO 4-30
 quit

@@ -9,24 +9,6 @@
 #include "sorter.h"
 #include "requests.h"
 
-Link blankLink() {
-	Link l;
-	l.destination = malloc(sizeof(char)*LEN_IATA_AIRPORT);
-	l.arr_time = 0;
-	return l;
-}
-
-Node blankNode() {
-	Node n;
-	n.origin = malloc(sizeof(char)*LEN_IATA_AIRPORT);
-	for (int i = 0; i<MAX_LINKS; i++)
-	{
-		n.routes[i] = blankLink();
-	}
-	n.last = -1;
-	return n;
-}
-
 int addFormatedTime(int time, int delay) {
 	time = time + delay;
 	if (time%100 > 60)
@@ -407,15 +389,23 @@ void find_multicity_itinerary(Tables* data, char* origin, QueueChars portsList, 
 	{
 		return;
 	}
-	char* args;
-	args[0] = 0;
+	char* args = malloc(sizeof(char)*5);
 	if (timesList.first->val != 0)
 	{
 		sprintf(args, "%d", timesList.first->val);
 	}	
-	printf("%s -> %s\n", origin, portsList.first->val);
+	else 
+	{
+		sprintf(args, "%d", 0);
+	}
+	printf("%s -> %s %d-%d <%s>\n", origin, portsList.first->val, datesList.first->month, datesList.first->day, args);
 	find_itinerary(data, origin, portsList.first->val, datesList.first->month, datesList.first->day, args);
-	strcpy(origin, portsList.first->next->val);
+	free(args);
+	if (portsList.first->next == NULL)
+	{
+		return;
+	}
+	strcpy(origin, portsList.first->val);
 	
 	LinkedChars* port_to_free = portsList.first;
 	portsList.first = portsList.first->next;
@@ -426,7 +416,7 @@ void find_multicity_itinerary(Tables* data, char* origin, QueueChars portsList, 
 	LinkedInts* time_to_free = timesList.first;
 	timesList.first = timesList.first->next;
 
-	find_multicity_itinerary(data, portsList.first->val, portsList, datesList, timesList);
+	find_multicity_itinerary(data, origin, portsList, datesList, timesList);
 	free(port_to_free);
 	free(date_to_free);
 	free(time_to_free);

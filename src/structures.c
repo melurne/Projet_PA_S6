@@ -267,3 +267,56 @@ void freeTables(Tables* data) {
   freeTableAirlines(&(data->airlines));
   freeTableAirports(&(data->airports));
 }
+
+void Queue_char(QueueChars* queue, char* str) {
+  LinkedChars* cell = malloc(sizeof(LinkedChars));
+  cell->val = malloc(sizeof(char)*LEN_IATA_AIRPORT);
+  strcpy(cell->val, str);
+  cell->next = NULL;
+  if (queue->first == NULL)
+  {
+    queue->last = cell;
+    queue->first = cell;
+  }
+  else
+  {
+  queue->last->next = cell;
+  queue->last = cell;
+  
+  }
+}
+
+void Queue_date(QueueDates* queue, int month, int day) {
+  LinkedDates* cell = malloc(sizeof(LinkedDates));
+  cell->month = month;
+  cell->day = day;
+  cell->next = NULL;
+  if (queue->first == NULL)
+  {
+    queue->last = cell;
+    queue->first = cell;
+  }
+  else
+  {
+  queue->last->next = cell;
+  queue->last = cell;
+  
+  }
+}
+
+void Queue_int(QueueInts* queue, int time) {
+  LinkedInts* cell = malloc(sizeof(LinkedInts));
+  cell->val = time;
+  cell->next = NULL;
+  if (queue->first == NULL)
+  {
+    queue->last = cell;
+    queue->first = cell;
+  }
+  else
+  {
+  queue->last->next = cell;
+  queue->last = cell;
+  
+  }
+}

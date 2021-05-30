@@ -23,17 +23,19 @@ int retrieveNextLine(FILE* fp, char** line, size_t max_lenght_line) {
   return 0;
 }
 
-void getNextArg(char** curr, char** next, char** target) {
+void getNextArg(char** curr, char** next, char** target, char seperator) {
   /* 
     Fetches the next token in the line
     Puts the result in target
   */
+  if (*next == NULL)
+    return;
   strncpy(*target, *curr, (*next)-(*curr));
   // Properly finishes the string
   (*target)[(*next)-(*curr)] = 0;
   // Update curr and next to point to the next token in the string
   *curr = *next + 1;
-  *next = strchr(*curr, ',');
+  *next = strchr(*curr, seperator);
 }
 
 int readOneAirline(FILE* fp, Airline* airline) {
@@ -58,7 +60,7 @@ int readOneAirline(FILE* fp, Airline* airline) {
     return -1;
   }
 
-  getNextArg(&curr, &next, &(airline->IATA_code));
+  getNextArg(&curr, &next, &(airline->IATA_code), ',');
 
   next = strchr(curr, '\0');
   strcpy(airline->name, curr);
@@ -95,13 +97,13 @@ int readOneAirport(FILE* fp, Airport* airport) {
   // We use atoi and atof to cast arguments to int and float respectively
   // When the arguments are strings, we just copy the content of the token to the corresponding argument directly
 
-  getNextArg(&curr, &next, &(airport->IATA_code));
-  getNextArg(&curr, &next, &(airport->name));
-  getNextArg(&curr, &next, &(airport->city));
-  getNextArg(&curr, &next, &(airport->state));
-  getNextArg(&curr, &next, &(airport->country));
+  getNextArg(&curr, &next, &(airport->IATA_code), ',');
+  getNextArg(&curr, &next, &(airport->name), ',');
+  getNextArg(&curr, &next, &(airport->city), ',');
+  getNextArg(&curr, &next, &(airport->state), ',');
+  getNextArg(&curr, &next, &(airport->country), ',');
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   airport->longitude = atof(tmp);
   
   next = strchr(curr, '\0');
@@ -141,33 +143,33 @@ int readOneFlight(FILE* fp, Flight* f) {
   // We use atoi and atof to cast arguments to int and float respectively
   // When the arguments are strings, we just copy the content of the token to the corresponding argument directly
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->month = atoi(tmp);
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->day = atoi(tmp);
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->weekday = atoi(tmp);
 
-  getNextArg(&curr, &next, &(f->airline));
-  getNextArg(&curr, &next, &(f->org_air));
-  getNextArg(&curr, &next, &(f->dest_air));
+  getNextArg(&curr, &next, &(f->airline), ',');
+  getNextArg(&curr, &next, &(f->org_air), ',');
+  getNextArg(&curr, &next, &(f->dest_air), ',');
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->sched_dep = atoi(tmp);
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->dep_delay = atof(tmp);
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->air_time = atof(tmp);
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->dist = atoi(tmp);
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->sched_arr = atoi(tmp);
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->arr_delay = atof(tmp);
 
-  getNextArg(&curr, &next, &tmp);
+  getNextArg(&curr, &next, &tmp, ',');
   f->diverted = atoi(tmp) == 1;
 
   next = strchr(curr, '\0');
