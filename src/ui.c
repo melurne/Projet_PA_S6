@@ -1,15 +1,14 @@
-#include "ui.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "structures.h"
 #include "hash.h"
 #include "reader.h"
-#include "requests.h"
 #include "sorter.h"
-#include "structures.h"
+#include "requests.h"
+#include "ui.h"
 
 int functionHash(const char* key) {
   int sum = 0;

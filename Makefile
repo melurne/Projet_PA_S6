@@ -1,5 +1,5 @@
-bin/build : lib/main.o lib/hashairlines.o lib/hashairports.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o
-	gcc lib/main.o lib/hashairports.o lib/hashairlines.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o -o bin/build
+projet_pa : lib/main.o lib/hashairlines.o lib/hashairports.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o
+	gcc lib/main.o lib/hashairports.o lib/hashairlines.o lib/structures.o lib/reader.o lib/sorter.o lib/requests.o lib/ui.o -o projet_pa
 
 lib/hashairlines.o : hashFunc/hashairlines.c
 	gcc -c -g -w -Wall -Wextra hashFunc/hashairlines.c -o lib/hashairlines.o

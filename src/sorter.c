@@ -1,13 +1,12 @@
-#include "sorter.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "structures.h"
 #include "hash.h"
 #include "reader.h"
-#include "structures.h"
+#include "sorter.h"
 
 void sortAirlines(TableAirlines* airlines) {
   FILE* fp = fopen(AIRLINES_PATH, "r");

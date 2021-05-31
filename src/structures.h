@@ -10,28 +10,18 @@
 #define MAX_LENGTH_ARGS 120
 #define MAX_LENGTH_FUNCTION 35
 
-#define MASK_FLIGHTS "%d %d %d %s %s %s %d %f %f %d %d %f %d %d"
-#define MASK_FLIGHTS_MISSING "%d %d %d %s %s %s %d   %d %d  %d %d"
-#define NARGS_FLIGHTS 14
-#define NARGS_FLIGHTS_MIN 11
 #define MAX_LINE_LENGTH_FLIGHTS 70
 #define FLIGHTS_PATH "data/flights.csv"
 
-//#define MASK_AIRLINES "%s\t%s"
-//#define MASK_AIRLINES {'s', 's'}
-#define NARGS_AIRLINES 2
 #define LEN_IATA_AIRLINE 2
 #define MAX_LINE_LENGTH_AIRLINES 40
 #define MAX_LEN_AIRLINES 15
 #define AIRLINES_PATH "data/airlines.csv"
 #define AIRLINES_NAME_BUFFER_LENGTH 30
 
-#define MASK_AIRPORTS "%s %s %s %s %s %f %f"
-#define NARGS_AIRPORTS 7
-#define NARGS_AIRPORTS_MIN 5
 #define LEN_IATA_AIRPORT 3
 #define MAX_LINE_LENGTH_AIRPORTS 140
-#define MAX_LEN_AIRPORTS 323
+#define MAX_LEN_AIRPORTS 322
 #define AIRPORTS_PATH "data/airports.csv"
 #define AIRPORTS_NAME_BUFFER_LENGTH 75
 #define AIRPORTS_CITY_BUFFER_LENGTH 20

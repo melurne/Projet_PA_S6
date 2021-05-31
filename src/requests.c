@@ -1,14 +1,13 @@
-#include "requests.h"
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "structures.h"
 #include "hash.h"
 #include "reader.h"
 #include "sorter.h"
-#include "structures.h"
+#include "requests.h"
 
 int addFormatedTime(int time, int delay) {
   time = time + delay;
