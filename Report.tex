@@ -1,4 +1,4 @@
-\documentclass[a4paper, 12pt]{article}
+\documentclass[a4paper, 9pt]{article}
 
 \usepackage{listings}
 \usepackage{color}
@@ -37,8 +37,8 @@
 \begin{document}
 	\title{Projet de programation avancée\\S6}
 	\author{NEUS Maxence}
+	\date{}
 	\maketitle
-	\newpage
 	
 	\tableofcontents
 	\newpage
@@ -134,7 +134,7 @@
 	\section{Interface utilisateur}
 	Pour faire la distinction entre les différentes fonctions, nous allons commencer par récuperer le premier élément avant un \lstinline|' '| dans l'entrée standard, (ce qui correspond à la fonction demandée) et nous le passons par une fonction de hashage (la somme des caractères est suffisante ici) affin d'utiliser une structure \lstinline|switch ()  case:| où les cas correspondent aux résultats de la fonction de hashage pour les différentes fonction développées plus haut (ces valeurs ont été calculées manuellement à par avance). Chaque \lstinline|case:| fait donc correspondre une fonction qui récupère les arguments dans la fin de l'entrée stantard, si il y en a, et appelle la fonction correspondante.\\
 	Des valeurs de retours sont en place pour prendre en compte les cas non définis comme une fonction non reconue ou des arguments non valides, ainsi que le signal de sortie du programme qui est aussi exectué si le programme arrive à \lstinline|EOF| (dans le cas ou on a utilisé le programme avec un fichier de requetes).\\
-	\newpage
+
 	\section{Conclusions}
 	Dans l'ensemble, la réalisation de ce projet a permit de développer la compréhension des conceptes de programmation en C, notament l'utilisation des pointeurs et les nombreux problèmes qu'ils peuvent causer en condition réelles et pas seulement dans le cadre restreint des TPs.\\
 	Le choix de réaliser ce projet seul s'est avéré ne pas être la decision la plus judicieuse de cette année je dois l'admettre mais je pense avoir fourni un code fonctionnelle bien que sa propreté et sa clareté laissent à désirer au vue du manque de temps.\\
